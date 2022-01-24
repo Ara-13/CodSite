@@ -1,0 +1,193 @@
+/* Media Queries: Tablet Landscape */
+.body
+{
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    background-color: #e6ffff;
+}
+#Shape1
+{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 40%;
+    height: 600px;
+    background: linear-gradient(to top, #33ccff 0%, #66ff99 100%);
+    border-bottom-left-radius: 100%;
+    float: right;
+    box-shadow: 0 0 5px 0 #33ccff;
+}
+
+#Shape2
+{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 70%;
+    height: 700px;
+    background: linear-gradient(to top right, #003366 0%, #ff99cc 100%);
+    border-bottom-right-radius: 100%;
+    float: right;
+}
+
+#Shape3
+{
+    position: absolute;
+    left: 0px;
+    top: 300px;
+    width: 40%;
+    height: 600px;
+    background: linear-gradient(to top right, #66ff99 0%, #33ccff 100%);
+    border-top-right-radius: 100%;
+    float: left;
+}
+
+#Shape4
+{
+    position: absolute;
+    left: 0px;
+    top: 900px;
+    width: 40%;
+    height: 600px;
+    background: linear-gradient(to bottom right, #66ff99 0%, #33ccff 100%);
+    border-bottom-right-radius: 100%;
+    float: left;
+}
+
+#Shape5
+{
+    position: absolute;
+    right: -150px;
+    top: 250px;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(to top left, #ffcc66 0%, #cc66ff 100%);
+    float: right;
+    z-index: -1;
+}
+
+#Shape6
+{
+    position: absolute;
+    top: 1200px;
+    right: 0px;
+    width: 50%;
+    height: 600px;
+    background: linear-gradient(to bottom right, #66ff99 0%, #33ccff 100%);
+    border-top-left-radius: 100%;
+    float: right;
+}
+
+#Shape7
+{
+    position: absolute;
+    top: 1100px;
+    left: 0px;
+    width: 60%;
+    height: 700px;
+    background: linear-gradient(to top right, #003366 0%, #ff99cc 100%);
+    border-top-right-radius: 100%;
+    float: left;
+}
+
+.body1
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+.container1
+{
+    position: relative;
+    top: 50px;
+    margin: 0px auto 0px;
+    width: 100%;
+    height: 90%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px 0 black;
+}
+.container2
+{
+    position: relative;
+    margin: 0px auto 0px;
+    width: 100%;
+    height: 80%;
+}
+.container3
+{
+    position: relative;
+    margin: 0px auto 20px;
+    width: 100%;
+    height: 80%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px 0 black;
+    display: flex;
+    justify-content: center;
+}
+.container3 > ul
+{
+    list-style: none;
+
+}
+.container3 > div
+{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(255, 255, 255, 0.3);
+    backdrop-filter: blur(30px);
+    margin: auto 80px auto;
+    border-radius: 10px;
+    min-height: 400px;
+    min-width: 400px;
+}
+.container3 > div:hover
+{
+    box-shadow: 0 2px 10px 0 black;
+    transition: all ease-in 0.2s;
+    min-height: 400px;
+    min-width: 400px;
+}
+.container3 div a
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    text-align: center;
+}
+
+.container3 div a #codm-logo
+{   
+    position: relative;
+    top: 12.5%;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+.container3 div a p
+{
+    visibility: hidden;
+    color: #3477ac;
+    font-size: 30px;
+    text-shadow: 2px 2px 5px #33ccff;
+}
+
+.container3 > div:hover a #codm-logo
+{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    top: 10%;
+}
+.container3 > div:hover a p
+{
+    visibility: visible;
+    position: relative;
+    bottom: -10%;
+}

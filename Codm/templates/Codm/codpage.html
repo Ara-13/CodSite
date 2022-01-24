@@ -1,0 +1,18 @@
+{% extends 'Codm/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" rel="stylesheet" href="{% static 'codpage.css' %}" />
+        <div class="top-container">
+        </div>
+        <div class="logo-container">
+            <img src="{% static 'pictures/codm-logo.png' %}" alt="logo" />
+        </div>
+        <div class="main-container">
+            <h1>اکانت های تایید شده و قابل خرید</h1>
+            <ul id="Ready">
+            </ul>
+            <ul id="Waiting">
+            </ul>
+        </div>
+{% endblock %}

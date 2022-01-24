@@ -1,0 +1,79 @@
+#ul1
+{
+    list-style: none;
+    margin-top: 0px;
+    width: 100%;
+    height: auto;
+    background-color: #f2f2f2;
+    position: fixed;
+    z-index: 2000;
+}
+#ul1 > li
+{
+    width: 100px;
+    height: 43px;
+    padding-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #3477ac;
+    /*box-shadow: 1px 0 5px 0 #3477ac;*/
+    transition: all ease-in 0.1s;
+    display: inline-block;
+}
+#ul1 > li::after
+{
+    content: '';
+    width: 0;
+    height: 3px;
+    margin-top: 8px;
+    display: block;
+    background-color: #33ccff;
+    box-shadow: 0 -2px 10px 0 #33ccff;
+}
+#ul1 > li:hover
+{
+    color: #33ccff;
+    background-color: #e6e6e6;
+    padding-top: 7px;
+}
+#ul1 > li:hover::after
+{
+    width: 100%;
+}
+#accounts div
+{
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    background-color: #f2f2f2;
+    padding: 10px;
+    padding-right: 0px;
+    display: none;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#accounts:hover div
+{
+    margin-top: 5px;
+    display: block;
+    color: #3477ac;
+}
+#accounts ul
+{
+    list-style: none;
+    padding-right: 0px;
+}
+#accounts ul li
+{
+    margin-top: 5px;
+    padding: 15px;
+    transition: all ease-in-out 0.1s;
+}
+#accounts ul li:hover
+{
+    color: #33ccff;
+    border-right: solid 3px #33ccff;
+    background-color: #e6e6e6;
+}
