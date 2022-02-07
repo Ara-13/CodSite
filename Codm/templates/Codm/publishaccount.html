@@ -1,0 +1,74 @@
+{% extends 'Codm/base.html' %}
+
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        شماره آگهی: {{code}}<br />
+        <label for="level">لول اکانت</label>
+        <input type="number" name="level" min="1" max="150"/><br />
+
+        <label for="image">عکس آگهی</label>
+        <input type="file" name="image" accept="image/*"><br />
+        <label for="video">ویدیو اکانت</label>
+        <input type="text" name="video"/>
+
+        <p>ریجن اکانت<br />
+        <label for="region">هند</label>
+        <input type="radio" name="region" value="220"/>
+        <label for="region">ایران</label>
+        <input type="radio" name="region" value="360"/>
+        <label for="region">اروپا</label>
+        <input type="radio" name="region" value="560"/></p><br />
+
+        <p>سیو های اکانت<br />
+        <label for="activision">اکتویژن </label>
+        <input type="checkbox" name="activision" value="True"/>
+
+        <label for="facebook">فیس بوک 
+            <img src="https://img.icons8.com/fluency/50/000000/facebook-new.png" alt="facebook"/>
+        </label>
+
+        <input type="checkbox" name="facebook" value="True"/>
+        <label for="gmail"/>گوگل(جیمیل) 
+        <img src="https://img.icons8.com/color-glass/48/000000/google-logo.png"/>
+        </label>
+
+        <input type="checkbox" name="gmail" value="True"/>
+        <label for="apple_id">اپل آی دی 
+            <img src="https://img.icons8.com/fluency/48/000000/mac-os.png"/>
+        </label>
+        <input type="checkbox" name="apple_id" value="True"/>
+        <label for="line">لاین 
+            <img src="https://img.icons8.com/fluency/48/000000/line-me.png"/>
+        </label>
+        <input type="checkbox" name="line" value="True"/>
+        </p><br />
+
+        <label for="cp">تعداد CP</label>
+        <input type="number" name="cp" min="0"/>
+        <label for="c">تعداد C</label>
+        <input type="number" name="c" min="0"/><br />
+
+        <label for="multi_ranked">رنک مولتی</label>
+        <input type="text" name="multi_ranked"/>
+        <label for="battle_ranked">رنک بتل</label>
+        <input type="text" name="battle_ranked"/><br />
+        
+        <label for="battle_pass">بتل پس های اکانت</label>
+        <input type="text" name="battle_pass" /><br />
+
+        <label for="description">توضیحات بیشتر</label>
+        <textarea name="description" cols="45" rows="15" style="resize: none;
+        direction: rtl;">
+        </textarea><br />
+
+        <p><label for="price">قیمت</label>
+        <input type="number" name="price" min="100000" max="100000000"/><br />
+        توجه داشته باشید که مبلغ وارد شده برای آگهی اکانت، به اندازه حق واسطه گری سایت به قیمت اکانت اضافه می شود
+        </p>
+
+        <input type="submit" value="آگهی اکانت"/><br />
+    </form>
+</div>
+{% endblock %}

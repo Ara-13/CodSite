@@ -2,17 +2,90 @@
 {% load static %}
 
 {% block content %}
+<script>
+    function AutoScroll() {
+    location.replace("#show")
+    }
+</script>
 <link type="text/css" rel="stylesheet" href="{% static 'codpage.css' %}" />
+<div onload="AutoScroll()">
         <div class="top-container">
         </div>
         <div class="logo-container">
             <img src="{% static 'pictures/codm-logo.png' %}" alt="logo" />
         </div>
         <div class="main-container">
-            <h1>اکانت های تایید شده و قابل خرید</h1>
-            <ul id="Ready">
-            </ul>
-            <ul id="Waiting">
+            <form method="get">
+                <input type="text" placeholder="جست و جو کنید" name="q" />
+                <input type="submit" value="جست و جو"/>
+            </form>
+            {% if main_filter != 'No-filter' %}
+            <div id="main-filter">
+                {% if main_filter == 'w4p' %}
+                <h1>اکانت های آگهی شده و در لیست انتظار</h1>
+                <a href="{% url 'Codm:codm' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
+                <a href="{% url 'Codm:codm' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
+                {% elif main_filter == 'sold' %}
+                <a href="{% url 'Codm:codm' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
+                <a href="{% url 'Codm:codm' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
+                <h1>اکانت های فروخته شده</h1>
+                {% else %}
+                <a href="{% url 'Codm:codm' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
+                <h1>اکانت های تایید شده و قابل خرید</h1>
+                <a href="{% url 'Codm:codm' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
+                {% endif %}
+            </div>
+            {% endif %}
+            <a name="show"></a>
+            <ul id="Ready"> 
+                {% if accounts %}
+                {% for account in accounts %}
+                <li>
+                    <div id="user-btn">
+                    <a href="">{{account.seller}}@
+                        <img style="height: 30px; width: 30px; border: solid 0.5px #33ccff; border-radius: 50%;" src="https://img.icons8.com/fluency/48/000000/test-account.png"/>
+                    </a></div>
+                    <a href="{% url 'Codm:account' account.code %}" target="_blank">
+                        <div id="account-code">
+                            <div>
+                            شماره آگهی: {{account.code}}
+                            </div>
+                            {% if account.status == "available" %}
+                            <div style="margin-right: 20px; background-color:#80ff80;">
+                            موجود
+                            </div>
+                            {% elif account.status == "sold" %}
+                            <div style="margin-right: 20px; background-color: #cc0000;
+                            box-shadow: 0 0 8px 0#ff0000;">
+                            فروخته شد
+                            </div>
+                            {% else %}
+                            <div style="margin-right: 20px; background-color: #ffcc66;
+                            box-shadow: 0 0 8px 0 rgb(255, 204, 0)">
+                            در لیست انتظار
+                            </div>
+                            {% endif %} 
+                        </div>
+                    <div>
+                        {% if account.image %}
+                        <img src="{% static account.image.path %}" />
+                        {% else %}
+                        <img src="{% static 'pictures/codm-logo.png' %}" />
+                        {% endif %}
+                    </div>
+                    </a>
+                    <br />
+                    <!--{{سیوها}}-->
+                    {{account.price}}تومان<br /></a>
+                    <a href="">خرید</a>
+                    <a href="">ارسال پیام</a><br />
+                </li>
+                {% endfor %}
+                {% else %}
+                <h1>متاسفانه اکانتی برای فروش نداریم:(</h1><br />
+                <h2>بعدا سر بزنید</h2>
+                {% endif %}
             </ul>
         </div>
+</div>
 {% endblock %}

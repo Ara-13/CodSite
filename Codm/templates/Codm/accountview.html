@@ -1,0 +1,34 @@
+{% extends 'Codm/base.html' %}
+
+{% block content %}
+<div style="margin-right: 50px;">
+    {{account.code}}<br />
+    {{account.status}}<br />
+    {{account.pub_date}}<br />
+    {{account.level}}<br />
+    {% for link in links %}<br />
+    {% if link.Type == "activision" %}
+    {% endif %}
+    {% if link.Type == "facebook" %}
+    <img src="https://img.icons8.com/fluency/50/000000/facebook-new.png" alt="facebook"/>
+    {% endif %}
+    {% if link.Type == "gmail" %}
+    <img src="https://img.icons8.com/color-glass/48/000000/google-logo.png"/>
+    {% endif %}
+    {% if link.Type == "apple_id" %}
+    <img src="https://img.icons8.com/fluency/48/000000/mac-os.png"/>
+    {% endif %}
+    {% if link.Type == "line" %}
+    <img src="https://img.icons8.com/fluency/48/000000/line-me.png"/>
+    {% endif %}
+    {% endfor %}<br />
+    {{account.multi_ranked}}<br />
+    {{account.battle_ranked}}<br />
+    {{account.battle_pass}}<br />
+    {{account.description}}<br />
+    {% if account.status == 'available' %}
+    {{account.price}}<br />
+    <a href="">خرید اکانت</a>
+    {% endif %}
+</div>
+{% endblock %}

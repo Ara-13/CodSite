@@ -148,7 +148,9 @@
 .container3 > div:hover
 {
     box-shadow: 0 2px 10px 0 black;
-    transition: all ease-in 0.2s;
+    transition: all ease-in 0.3s;
+    width: 410px;
+    height: 410px;
     min-height: 400px;
     min-width: 400px;
 }
