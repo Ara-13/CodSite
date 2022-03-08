@@ -1,31 +1,442 @@
 {% extends 'Codm/base.html' %}
 {% load static %}
 {% block content %}
-<link type="text/css" rel="stylesheet" href="{% static 'home.css' %}" />
-<div class="body">
-    <div class="body1">
-        <div class="container1">
-        </div>
-        <div class="container2">
-        </div>
-        <div class="container3">
-            <div>
-                <a href="{% url 'Codm:codm' %}">
-                    <img id="codm-logo" src="{% static 'pictures/codm-logo.png' %}" alt="codm" /><br />
-                    <p>اکانت کالاف دیوتی موبایل</p></a>
-            </div>
-            <div>
-                2
-            </div>
-        </div>
+<link rel="stylesheet" type="text/css" href="{% static 'home.css' %}"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/jquery.fancybox.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/owl.carousel.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/owl.theme.default.min.css' %}"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div id="body" >
+<!-- Navbar -->
+<!--
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a href="#"> <img src="{% static 'pictures/main-logo.jpg' %}" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="" data-scroll-nav="0">خانه</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="1">درباره ما</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="2">خدمات و امکانات</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="3">کار</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="4">پشتیبانی</a> </li>
+      </ul>
     </div>
-    <div id="Shape1"></div>
-    <div id="Shape2"></div>
-    <div id="Shape3"></div>
-    <div id="Shape4"></div>
-    <div id="Shape5"></div>
-    <div id="Shape6"></div>
-    <div id="Shape7"></div>
+  </div>
+</nav>-->
+<!-- End Navbar --> 
+
+<!-- Banner Image -->
+
+<div class="banner text-center" data-scroll-index='0' style="margin-top: 0px;">
+  <div class="banner-overlay">
+    <div class="container">
+      <h1 class="text-capitalize">به گیم استور خوش آمدید</h1>
+      <p>گیم استور اولین و بهترین سایت خرید و فروش اکانت ها و خدمات بازی ها در ایران<br />
+        خرید با خیال راحت
+      </p>
+      <a href="#" data-scroll-nav="2" class="banner-btn">بزن بریم!</a> </div>
+  </div>
 </div>
 
+<!-- End Banner Image --> 
+
+<!-- About -->
+
+<div class="about-us section-padding" data-scroll-index='1'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 section-title text-center">
+        <h3>تجربه بهتر</h3>
+        <p>در گیم استور به راحتی میتوانید با ساخت حساب کاربری، به پنل کاربری با امکانات بالا دسترسی پیدا کنید</p>
+        <span class="section-title-line"></span> </div>
+      <div class="col-md-6 mb-50">
+        <div class="section-info">
+          <div class="sub-title-paragraph">
+            <h4>ثبت نام کنید و تخفیف بگیرید!</h4>
+            <h5>همچنین با ساخت حساب کاربری از امکانات دیگری نیز برخوردار میشوید</h5>
+            <p>ما در گیم استور تلاش میکنیم تا تجربه خریدی مطمئن را برای شما رقم بزنیم. شما می توانید به راحتی اکانت های خود را در سایت ما آگهی کنید و از طریق پنل کاربری و پیامک از وضعیت معامله هایتان با خبر شوید</p>
+          </div>
+          <a href="#" class="anchor-btn">ورود/ثبت نام</a> </div>
+      </div>
+      <div class="col-md-6 mb-50">
+        <div class="section-img"> <img src="{% static 'pictures/account.jpg' %}" alt="" class="img-responsive" style="width: 350px;
+          margin-right: 50px;"/> </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End About --> 
+
+<!-- Services -->
+<div class="services section-padding bg-grey" data-scroll-index='2' id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 section-title text-center">
+        <div style="width: 100%; height: auto; padding:20px; background-color: #003366d5;
+        backdrop-filter: 10px; border-radius: 10px;">
+        <h3 style="color: #ff80bf;">خدمات و بازی ها</h3>
+        <span class="section-title-line"></span><br />
+        <p style="color:white">بازی دلخواهتان را انتخاب کنید و وارد دنیایی تازه شوید!</p>
+        </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+          <a href="{% url 'Codm:codm' %}" >
+        <div class="service-box bg-white text-center">
+          <div class="icon"><img src="{%static 'pictures/codacc.png' %}" style="border-radius: 15px;"/></div>
+          <div class="icon-text">
+            <h4 class="title-box">اکانت کالاف دیوتی موبایل</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+        <div class="service-box bg-white text-center">
+          <div class="icon"><img src="{% static 'pictures/codcp.png' %}" style="border-radius: 15px;"/></div>
+          <div class="icon-text">
+            <h4 class="title-box">سیپی کالاف دیوتی موبایل</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+        <div class="service-box bg-white text-center">
+          <div class="icon"> <i class="fas fa-map-marked"></i> </div>
+          <div class="icon-text">
+            <h4 class="title-box">Mark Location</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+        <div class="service-box bg-white text-center">
+          <div class="icon"> <i class="fas fa-bug"></i> </div>
+          <div class="icon-text">
+            <h4 class="title-box">Bug Solution</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+        <div class="service-box bg-white text-center">
+          <div class="icon"> <i class="fas fa-comments"></i> </div>
+          <div class="icon-text">
+            <h4 class="title-box">Fast Communication</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-30">
+        <div class="service-box bg-white text-center">
+          <div class="icon"> <i class="fas fa-paint-brush"></i> </div>
+          <div class="icon-text">
+            <h4 class="title-box">Clean Design</h4>
+            <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Services --> 
+
+<!-- Gallery -->
+<div class="portfolio section-padding" data-scroll-index='3'>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 section-title text-center">
+        <h3>Check our recent works</h3>
+        <p>Vestibulum elementum dui tempus dolor gravida, vel mattis erat fermentum.</p>
+        <span class="section-title-line"></span> </div>
+      <div class="filtering text-center mb-30">
+        <button type="button" data-filter='*' class="active">All</button>
+        <button type="button" data-filter='.summer'>Summer</button>
+        <button type="button" data-filter='.winter'>Winter</button>
+        <button type="button" data-filter='.rainy'>Rainy</button>
+        <button type="button" data-filter='.spring'>Spring</button>
+      </div>
+      <div class="gallery no-padding col-lg-12 col-sm-12">
+        <div class="col-lg-4 col-sm-6 spring no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall1.jpg"></a>
+            <div class="part-img"> <img src="images/gall1.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Spring</h4>
+                <h6>Autumn Leaves</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 spring no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall2.jpg"></a>
+            <div class="part-img"> <img src="images/gall2.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Spring</h4>
+                <h6>Flower Pot</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 spring no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall3.jpg"></a>
+            <div class="part-img"> <img src="images/gall3.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Spring</h4>
+                <h6>Bird with Flower</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 summer no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall4.jpg"></a>
+            <div class="part-img"> <img src="images/gall4.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Summer</h4>
+                <h6>Vacation Trip Van</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 winter no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall5.jpg"></a>
+            <div class="part-img"> <img src="images/gall5.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Winter</h4>
+                <h6>Girl in the snow</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 rainy no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall6.jpg"></a>
+            <div class="part-img"> <img src="images/gall6.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Rainy</h4>
+                <h6>Man with an Umberalla</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 summer no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall7.jpg"></a>
+            <div class="part-img"> <img src="images/gall7.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Summer</h4>
+                <h6>New Beginning</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 rainy no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall8.jpg"></a>
+            <div class="part-img"> <img src="images/gall8.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Rainy</h4>
+                <h6>Girl in the Rain</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 summer no-padding">
+          <div class="item-img"> <a class="single-image" href="images/gall9.jpg"></a>
+            <div class="part-img"> <img src="images/gall9.jpg" alt="image">
+              <div class="overlay-img">
+                <h4>Summer</h4>
+                <h6>Fun at the Seashores</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Gallery -->
+<!-- Testimonials -->
+<div class="testimonials">
+  <div class="testimonials-overlay section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <div class="owl-carousel owl-theme">
+            <div class="testimonial-item text-center">
+              <div class="icon"> <i class="fas fa-comments"></i> </div>
+              <p class="m-auto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <div class="testimonial-author text-center">
+                <h5>Rup Jakhar</h5>
+                <h6>Web Desinger</h6>
+              </div>
+            </div>
+            <div class="testimonial-item text-center">
+              <div class="icon"> <i class="fas fa-comments"></i> </div>
+              <p class="m-auto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="testimonial-author text-center">
+                <h5>Yogesh Singh</h5>
+                <h6>Web Desinger</h6>
+              </div>
+            </div>
+            <div class="testimonial-item text-center">
+              <div class="icon"> <i class="fas fa-comments"></i> </div>
+              <p class="m-auto">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <div class="testimonial-author text-center">
+                <h5>Vivek Singh</h5>
+                <h6>Web Desinger</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Testimonials --> 
+
+<footer class="footer-copy">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <p>2018 &copy; Elegant. Website Designed by <a href="http://w3Template.com" target="_blank" rel="dofollow">W3 Template</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> 
+<!-- owl carousel js --> 
+<script src="{% static 'home_extentions/js/owl.carousel.min.js' %}"></script> 
+<!-- magnific-popup --> 
+<script src="{% static 'home_extentions/js/jquery.fancybox.min.js' %}"></script> 
+
+<!-- scrollIt js --> 
+<script src="{% static 'home_extentions/js/scrollIt.min.js' %}"></script> 
+
+<!-- isotope.pkgd.min js --> 
+<script src="{% static 'home_extentions/js/isotope.pkgd.min.js' %}"></script> 
+<script>
+  $(window).on("scroll",function () {
+
+      var bodyScroll = $(window).scrollTop(),
+          navbar = $(".navbar");
+
+      if(bodyScroll > 130){
+
+          navbar.addClass("nav-scroll");
+          $('.navbar-logo img').attr('src','images/logo-black.png');
+
+
+      }else{
+
+          navbar.removeClass("nav-scroll");
+          $('.navbar-logo img').attr('src','images/logo-white.png');
+
+      }
+
+  });
+
+  $(window).on("load",function (){
+
+
+
+var bodyScroll = $(window).scrollTop(),
+navbar = $(".navbar");
+
+if(bodyScroll > 130){
+
+navbar.addClass("nav-scroll");
+$('.navbar-logo img').attr('src','images/logo-black.png');
+
+
+}else{
+
+navbar.removeClass("nav-scroll");
+$('.navbar-logo img').attr('src','images/logo-white.png');
+
+}
+
+/* smooth scroll
+  -------------------------------------------------------*/
+  $.scrollIt({
+
+easing: 'swing',      // the easing function for animation
+scrollTime: 900,       // how long (in ms) the animation takes
+activeClass: 'active', // class given to the active nav element
+onPageChange: null,    // function(pageIndex) that is called when page is changed
+topOffset: -63
+});
+
+/* isotope
+-------------------------------------------------------*/
+var $gallery = $('.gallery').isotope({});
+$('.gallery').isotope({
+
+    // options
+    itemSelector: '.item-img',
+    transitionDuration: '0.5s',
+
+});
+
+
+$(".gallery .single-image").fancybox({
+  'transitionIn'  : 'elastic',
+  'transitionOut' : 'elastic',
+  'speedIn'   : 600,
+  'speedOut'    : 200,
+  'overlayShow' : false
+});
+
+
+/* filter items on button click
+-------------------------------------------------------*/
+$('.filtering').on( 'click', 'button', function() {
+
+    var filterValue = $(this).attr('data-filter');
+
+    $gallery.isotope({ filter: filterValue });
+
+    });
+
+$('.filtering').on( 'click', 'button', function() {
+
+    $(this).addClass('active').siblings().removeClass('active');
+
+});
+
+})
+
+$(function () {
+$( ".cover-bg" ).each(function() {
+    var attr = $(this).attr('data-image-src');
+
+    if (typeof attr !== typeof undefined && attr !== false) {
+      $(this).css('background-image', 'url('+attr+')');
+    }
+
+  });
+
+  /* sections background color from data background
+  -------------------------------------------------------*/
+  $("[data-background-color]").each(function() {
+      $(this).css("background-color", $(this).attr("data-background-color")  );
+  });
+
+
+/* Owl Caroursel testimonial
+  -------------------------------------------------------*/
+  
+  $('.testimonials .owl-carousel').owlCarousel({
+    loop:true,
+    autoplay:true,
+    items:1,
+    margin:30,
+    dots: true,
+    nav: false,
+    
+  });
+
+});
+
+</script>
+</div>
 {% endblock %}

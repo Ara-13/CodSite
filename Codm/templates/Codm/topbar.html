@@ -12,25 +12,33 @@
                 direction: rtl;
                 font-family: 'Noto Sans Arabic', sans-serif;
             }
+            a 
+            {
+                text-decoration: none;
+            }
+            a:hover
+            {
+                text-decoration: none;
+            }
         </style>
     </head>
     <body>
         <ul id="ul1">
             <li id="accounts">اکانت ها
-            <div>
-                <ul>
-                    <li>اکانت های یک میلیونی</li>
-                    <li>اکانت های یک میلیونی</li>
-                    <li>اکانت های یک میلیونی</li>
-                    <li>اکانت های یک میلیونی</li>
-                    <li>اکانت های یک میلیونی</li>
-                </ul>
-            </div>
             </li>
-            <li>خرید سیپی</li>
-            <li>حساب کاربری</li>
-            <li>فیلتر ها</li>
-            <li>درباره ما</li>
+            {% if request.user.is_authenticated %}
+            <li>
+                سلام {{request.user.name}}<br />
+                <a href="{% url 'Users:logout' %}">خروج</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'Users:login' %}">ورود/ثبت نام</a>
+            </li>
+            {% endif %}
+            <li>
+                <a href="{% url 'Codm:cart' %}">سبد خرید</a>
+            </li>
         </ul>
 
     </body>

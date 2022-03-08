@@ -1,0 +1,18 @@
+{% extends 'Codm/base.html' %}
+
+{% block content %}
+<div style="position: absolute; top:50%; left: 50%">
+{{uuser}}
+{{message}}
+{% if Page == 'login' %}
+<form method="post">
+    {% csrf_token %}
+    <input type="email" placeholder="ایمیل خود را وارد کنید" required="true" name="email" /><br />
+    <input type="password" placeholder="رمز عبور خود را وارد کنید" required="true" name="password" />
+    <input type="submit" value="ورود" />
+</form>
+<a href="{% url 'Users:signup' %}">ساخت حساب</a>هنوز حساب کاربری ندارید؟
+{% else %}
+{% endif %}
+</div>
+{% endblock %}

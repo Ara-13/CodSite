@@ -13,3 +13,10 @@ class CodAccountAdmin(admin.ModelAdmin):
 class CodAccountAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(models.Order)
+class CodOrderAdmin(admin.ModelAdmin):
+    pass
+@admin.register(models.Cart)
+class CodCartAdmin(admin.ModelAdmin):
+    pass
+

@@ -1,15 +1,26 @@
 from urllib.request import Request
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from matplotlib.style import available
+from matplotlib.style import available, context
 from sympy import solve_undetermined_coeffs
 from . import models
+from Codm.models import Order, Cart
 from django.db.models import Q
 from jdatetime import date
-from .forms import CodAccountForm
+from Codm.forms import CodAccountForm, CodAccountLinkForm
+#User Login
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+User1 = settings.AUTH_USER_MODEL
+from Users.models import User
+#random
+from random import randint
 
 def home(request):
-    return render(request, 'Codm/home.html')
+    context = {
+        'HomePage' : True,
+    }
+    return render(request, 'Codm/old-home.html', context)
 
 def codm(request):
     q = request.GET.get('q')
@@ -41,7 +52,8 @@ def account(request, co):
     }
     return render(request, 'Codm/accountview.html', context)
 
-def publish_account(request):
+
+'''def publish_account(request):
     account_number = models.CodAccount.objects.all().count()+1
 
     context = {
@@ -75,20 +87,87 @@ def publish_account(request):
         price=final_price)
         Account.save()
         return redirect('/Codm/codaccounts/')
-    return render(request, 'Codm/publishaccount.html', context)
+    return render(request, 'Codm/publishaccount.html', context)'''
 
+@login_required(login_url='Users:login')
 def publish(request):
+    account_number = models.CodAccount.objects.all().count()+1
     form = CodAccountForm()
+    linkform = CodAccountLinkForm()
     if request.method == "POST":
         form = CodAccountForm(request.POST)
+        linkform = CodAccountLinkForm(request.POST)
         if form.is_valid:
             account = form.save(commit=False)
+            account.seller = request.user
+            account.code = account_number
+            account.save()
+            link = linkform.save(commit=False)
+            link.account = account
+            link.save()
+            return redirect('Codm:home')
 
-    return render(request, 'Codm/publish.html', {'form' : form,})
+    context = {
+        'form' : form,
+        'linkform' : linkform,
+        'code' : account_number,
+    }
 
-def login_page(request):
-    pass
-def user_profile(request):
-    pass
+    return render(request, 'Codm/publish.html', context)
+
+@login_required(login_url='Users:login')
 def user_cart(request):
-    pass
+    cart = request.user.cart
+    cart.save()
+    cart_account = request.user.cart.account.all()
+    for account in cart_account:
+        if account.status != 'available':
+            cart.account.remove(account)
+            cart.save()
+    cart_account = request.user.cart.account.all()
+    context = {
+        'cart' : cart,
+        'cart_account' : cart_account,
+    }
+    return render(request, 'Codm/cart.html', context)
+
+@login_required(login_url='Users:login')
+def cart_finished(request):
+    cart = request.user.cart
+    if cart.status != 'f':
+        return redirect('Codm:cart')
+    else:
+        order = Order(user=request.user, order_number=randint(10000, 20000),
+        factor_number=randint(20000, 30000), date=date.today())
+        order.save()
+        cart_account = request.user.cart.account.all()
+        for account in cart_account:
+            account.status = 'sold'
+            account.final_status = 'sold'
+            account.order = order
+            account.save()
+
+        order_accounts = order.codaccount_set.all()
+        context = {
+            'order' : order,
+            'order_accounts' : order_accounts,
+        }
+        cart.delete()
+        new_cart = Cart(user=request.user, status='fn')
+        new_cart.save()
+        return render(request, 'Codm/cart-success.html', context)
+
+def addtocart(request, co):
+    account = models.CodAccount.objects.get(pk=co)
+    account.save()
+    cart = request.user.cart
+    cart.save()
+    cart.account.add(account)
+    cart.save()
+    return redirect('Codm:cart')
+    
+def shopping(request):
+    cart = request.user.cart
+    cart.status = 'f'
+    cart.save()
+    return redirect('Codm:cart-success')

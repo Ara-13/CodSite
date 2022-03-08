@@ -68,17 +68,20 @@
                         </div>
                     <div>
                         {% if account.image %}
-                        <img src="{% static account.image.path %}" />
+                        <img src="{% static account.image.path %}" style="object-fit: cover;
+                        object-position: center;"/>
                         {% else %}
-                        <img src="{% static 'pictures/codm-logo.png' %}" />
+                        <img src="{% static 'pictures/main-logo.jpg' %}" />
                         {% endif %}
                     </div>
                     </a>
                     <br />
                     <!--{{سیوها}}-->
                     {{account.price}}تومان<br /></a>
-                    <a href="">خرید</a>
+                    {% if account.status == 'available' %}
+                    <a href="{% url 'Codm:addtocart' account.code %}">خرید</a>
                     <a href="">ارسال پیام</a><br />
+                    {% endif %}
                 </li>
                 {% endfor %}
                 {% else %}

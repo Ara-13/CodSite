@@ -1,16 +1,27 @@
-from distutils.command.upload import upload
-from pyexpat import model
-from tkinter import CASCADE
 from django.db import models
-from django.contrib.auth.models import User
 from django.forms import DateField
 from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
 from jalali_date.widgets import AdminJalaliDateWidget, AdminSplitJalaliDateTime
-from sympy import factor
-from Codm.views import account
+#important
+#from django.conf import settings
+#User = settings.AUTH_USER_MODEL
+from Users.models import User
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    order_number = models.IntegerField(primary_key=True)
+    factor_number = models.IntegerField()
+    date = models.DateField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-order_number']
+    
+    def __str__(self):
+        return 'user:{}; order:{}; factor{}'.format(self.user, self.order_number, self.factor_number)
 
 class CodAccount(models.Model):
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
 
     code = models.IntegerField(primary_key=True)
     pub_date = models.DateField(null=True)
@@ -46,7 +57,7 @@ class CodAccount(models.Model):
     price = models.IntegerField()
     
     def __str__(self):
-        return '{}--{}--{}--{}'.format(self.seller, self.code, self.final_status, self.price)
+        return '{}---{}---{}---{}T'.format(self.seller, self.code, self.final_status, self.price)
 class Video(models.Model):
     account = models.OneToOneField(CodAccount, on_delete=models.CASCADE)
     #video
@@ -68,15 +79,14 @@ class Link(models.Model):
     def __str__(self):
         return '{}-account--{}'.format(self.Type, self.account.code)
 
-class Order(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    account = models.ForeignKey(CodAccount, on_delete=models.CASCADE)
-    order_number = models.IntegerField(primary_key=True)
-    factor_number = models.IntegerField()
-    date = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        ordering = ['-order_number']
-    
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    account = models.ManyToManyField(CodAccount, null=True, blank=True)
+    S = (
+        ('nf', 'NotFinished'),
+        ('f', 'Finished')
+    )
+    status = models.CharField(max_length=2, choices=S, default='nf')
+
     def __str__(self):
-        return 'order:{}; factor{}'.format(self.order_number, self.factor_number)
+        return 'Cart({})'.format(self.user)
