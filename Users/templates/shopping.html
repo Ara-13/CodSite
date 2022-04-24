@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fa">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f7858d">
+    <meta name="msapplication-navbutton-color" content="#f7858d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f7858d">
+    <!--SiteLogo-->
+    <link rel="icon" href="{% static 'assets/img/logo1.jpg' %}" type="image/logo" />
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap.min.css' %}">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap-slider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/jquery.horizontalmenu.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+</head>
+
+<body>
+    <div class="wrapper shopping-page">
+        <!-- Start header-shopping -->
+        <header class="header-shopping dt-sl">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center pt-2">
+                        <div class="header-shopping-logo dt-sl">
+                            <a href="">
+                                <img src="{% static 'assets/img/logo.jpg' %}" style="height: 35px" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <ul class="checkout-steps">
+                            <li>
+                                <a href="#" class="active">
+                                    <span>اطلاعات ارسال</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>پرداخت</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>اتمام خرید و ارسال</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End header-shopping -->
+        <!-- Start main-content -->
+        <main class="main-content dt-sl mt-4 mb-3">
+            <div class="container main-container">
+                <div class="row">
+                    <div class="cart-page-content col-xl-9 col-lg-8 col-12 px-0">
+                        <div class="section-title text-sm-title title-wide no-after-title-wide mb-0 px-res-1">
+                            <h2>انتخاب اکانت</h2>
+                        </div>
+                        <section class="page-content dt-sl">
+                            <div class="address-section">
+                                <div class="checkout-contact dt-sn dt-sn--box border px-0 pt-0 pb-0">
+                                    {% for account in cart_accounts %}
+                                    <div class="checkout-contact-content">
+                                        <ul class="checkout-contact-items">
+                                            <li class="checkout-contact-item">
+                                                گیرنده:
+                                                <span class="full-name">{{request.user.name}}</span>
+                                            </li>
+                                            <li class="checkout-contact-item">
+                                                <div class="checkout-contact-item checkout-contact-item-mobile">
+                                                    شماره تماس:
+                                                    <span class="mobile-phone">{{request.user.phone}}</span>
+                                                </div>
+                                                <div class="checkout-contact-item-message">
+                                                    کد آگهی اکانت:
+                                                    <span class="post-code">{{account.code}}</span>
+                                                </div>
+                                                <br>
+                                                استان
+                                                <span class="state">خراسان شمالی</span>
+                                                ، ‌شهر
+                                                <span class="city">بجنورد</span>
+                                                ،
+                                                <span class="address-part">خراسان شمالی-بجنورد</span>
+                                            </li>
+                                        </ul>
+                                        <a class="checkout-contact-location" id="btn-checkout-contact-location">تغییر
+                                            آدرس
+                                            ارسال</a>
+                                        <div class="checkout-contact-badge">
+                                            <i class="mdi mdi-check-bold"></i>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% for product in cart_products %}
+                                    <div class="checkout-contact-content">
+                                        <ul class="checkout-contact-items">
+                                            <li class="checkout-contact-item">
+                                                گیرنده:
+                                                <span class="full-name">{{request.user.name}}</span>
+                                            </li>
+                                            <li class="checkout-contact-item">
+                                                <div class="checkout-contact-item checkout-contact-item-mobile">
+                                                    دسته محصول:
+                                                    <span class="mobile-phone">{{product.group}}</span>
+                                                </div>
+                                                <div class="checkout-contact-item-message">
+                                                    نام محصول:
+                                                    <span class="post-code">{{product.name}}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <a class="checkout-contact-location" id="btn-checkout-contact-location">انتخاب اکانت</a>
+                                        <div class="checkout-contact-badge">
+                                            <i class="mdi mdi-check-bold"></i>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <div class="checkout-address dt-sn px-0 pt-0 pb-0" id="user-address-list-container">
+                                        <div class="checkout-address-content">
+                                            <div class="checkout-address-headline">اکانت مورد نظر خود را جهت خریداری محصول
+                                                انتخاب فرمایید:</div>
+                                            <div class="checkout-address-row">
+                                                <div class="checkout-address-col">
+                                                    <button class="checkout-address-location" data-toggle="modal"
+                                                        data-target="#modal-location">
+                                                        <strong>ایجاد اکانت جدید</strong>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            {% for ep in EPs %}
+                                            {% for product in cart_products %}
+                                            <div class="checkout-address-row">
+                                                <div class="checkout-address-col">
+                                                    <div {% if product.ep == ep %} class="checkout-address-box is-selected"
+                                                    {% else %} class="checkout-address-box" {% endif %}>
+                                                        <h5 class="checkout-address-title">اکانت {{ep.get_Type_display}}</h5>
+                                                        <p class="checkout-address-text">
+                                                            <span>ایمیل اکانت: {{ep.email}}</span>
+                                                        </p>
+                                                        <ul class="checkout-address-list">
+                                                            <li>
+                                                                <ul class="checkout-address-contact-info">
+                                                                    <li class="">رمز اکانت: <span>{{ep.password}}</span></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <ul>
+                                                                    <li>
+                                                                        <button class="checkout-address-btn-remove"
+                                                                            data-toggle="modal"
+                                                                            data-target="#remove-location">حذف</button>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        <a href="{% url 'Users:add_account_product' product.id ep.id %}">
+                                                            <button class="checkout-address-btn-submit">انتخاب اکانت</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        <button class="checkout-address-cancel" id="cancel-change-address-btn"></button>
+                                    </div>
+                                    <!-- Start Modal location new -->
+                                    <div class="modal fade" id="modal-location" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg send-info modal-dialog-centered"
+                                            role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">
+                                                        <i class="now-ui-icons location_pin"></i>
+                                                        افزودن اکانت جدید
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-ui dt-sl">
+                                                                <form class="form-account" action="" method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 col-sm-12 mb-2">
+                                                                            <div class="form-row-title">
+                                                                                <h4>
+                                                                                     نوع اکانت را انتخاب کنید:
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="form-row">
+                                                                                <div class="custom-select-ui">
+                                                                                    <select class="right" name="type" required>
+                                                                                        <option value="activision">
+                                                                                            اکتیویژن
+                                                                                        </option>
+                                                                                        <option value="facebook">
+                                                                                            فیسبوک
+                                                                                        </option>
+                                                                                        <option value="supercell">
+                                                                                            سوپرسل
+                                                                                        </option>
+                                                                                        <option value="gmail">
+                                                                                            جیمیل
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 mb-2">
+                                                                            <div class="form-row-title">
+                                                                                <h4>
+                                                                                    ایمیل
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="form-row">
+                                                                                <input
+                                                                                    class="input-ui pl-2 dir-ltr text-left placeholder-right"
+                                                                                    type="email"
+                                                                                    placeholder="ایمیل متصل به بازی خود را بنویسید" name="email" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 mb-2">
+                                                                            <div class="form-row-title">
+                                                                                <h4>
+                                                                                    رمز
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="form-row">
+                                                                                <input
+                                                                                    class="input-ui pl-2 dir-ltr text-left placeholder-right"
+                                                                                    type="text"
+                                                                                    placeholder="رمز خود را بنویسید" name="password" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 pr-4 pl-4">
+                                                                            <button type="submit"
+                                                                                class="btn btn-sm btn-primary btn-submit-form">تایید و ثبت اکانت</button>
+                                                                            <button type="button"
+                                                                                class="btn-link-border float-left mt-2" data-dismiss="modal"
+                                                                                aria-label="Close" >انصراف</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <img src="{% static 'assets/banner.jpg' %}"  style="position: relative; width:100%; height: 300px; border-radius: 10px; margin-top: 10px;" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal location new -->
+
+                                    <!-- Start Modal remove-location -->
+                                    <div class="modal fade" id="remove-location" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title mb-3" id="exampleModalLabel">آیا مطمئنید که
+                                                        این آدرس حذف شود؟</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button"
+                                                        class="remodal-general-alert-button remodal-general-alert-button--cancel"
+                                                        data-dismiss="modal">خیر</button>
+                                                    <button type="button"
+                                                        class="remodal-general-alert-button remodal-general-alert-button--approve">بله</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal remove-location -->
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <a href="{% url 'Users:cart' %}" class="float-right border-bottom-dt"><i
+                                        class="mdi mdi-chevron-double-right"></i>بازگشت به سبد خرید</a>
+                                <a href="{% url 'Users:shopping' %}" class="float-left border-bottom-dt">تایید و ادامه ثبت سفارش<i
+                                        class="mdi mdi-chevron-double-left"></i></a>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-12 w-res-sidebar sticky-sidebar">
+                        <div class="dt-sn dt-sn--box border mb-2">
+                            <ul class="checkout-summary-summary">
+                                <li>
+                                    <span>مبلغ کل (۲ کالا)</span><span>{{cart.final_price}} تومان</span>
+                                </li>
+                                <li class="checkout-club-container">
+                                    <span>خرید شما از سایت<span class="help-sn" data-toggle="tooltip" data-html="true"
+                                            data-placement="bottom"
+                                            title="<div class='help-container is-right'><div class='help-arrow'></div><p class='help-text'>با امتیازهای خود در باشگاه مشتریان گیم استور (دیجی کلاب) از بین جوایز متنوع انتخاب کنید.</p></div>">
+                                            <span class="mdi mdi-information-outline"></span>
+                                        </span></span><span><span>+1</span><span></span></span>
+                                </li>
+                            </ul>
+                            <div class="checkout-summary-devider">
+                                <div></div>
+                            </div>
+                            <div class="checkout-summary-content">
+                                <div class="checkout-summary-price-title">مبلغ قابل پرداخت:</div>
+                                <div class="checkout-summary-price-value">
+                                    <span class="checkout-summary-price-value-amount">{{cart.final_price}}</span>
+                                    تومان
+                                </div>
+                                <a href="{% url 'Users:shopping' %}" class="mb-2 d-block">
+                                    <button class="btn-primary-cm btn-with-icon w-100 text-center pr-0 pl-0">
+                                        <i class="mdi mdi-arrow-left"></i>
+                                        تایید و ادامه ثبت سفارش
+                                    </button>
+                                </a>
+                                <div>
+                                    <span>
+                                        کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش
+                                        مراحل بعدی را تکمیل کنید.
+                                    </span><span class="help-sn" data-toggle="tooltip" data-html="true"
+                                        data-placement="bottom"
+                                        title="<div class='help-container is-right'><div class='help-arrow'></div><p class='help-text'>محصولات موجود در سبد خرید شما تنها در صورت ثبت و پرداخت سفارش برای شما رزرو می‌شوند. در صورت عدم ثبت سفارش، گیم استور هیچگونه مسئولیتی در قبال تغییر قیمت یا موجودی این کالاها ندارد.</p></div>">
+                                        <span class="mdi mdi-information-outline"></span>
+                                    </span></div>
+                            </div>
+                        </div>
+                        <div class="dt-sn dt-sn--box checkout-feature-aside pt-4">
+                            <ul>
+                                <li class="checkout-feature-aside-item">
+                                    <img src="./assets/img/svg/return-policy.svg" alt="">
+                                    هفت روز ضمانت تعویض
+                                </li>
+                                <li class="checkout-feature-aside-item">
+                                    <img src="./assets/img/svg/payment-terms.svg" alt="">
+                                    پرداخت در محل با کارت بانکی
+                                </li>
+                                <li class="checkout-feature-aside-item">
+                                    <img src="./assets/img/svg/delivery.svg" alt="">
+                                    تحویل اکسپرس
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- End main-content -->
+        <!-- Start mini-footer -->
+        <footer class="mini-footer dt-sl">
+            <div class="container main-container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 text-left">
+                        <i class="mdi mdi-phone-outline"></i>
+                        شماره تماس : <a href="#">
+                            ۶۱۹۳۰۰۰۰
+                            - ۰۲۱
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <i class="mdi mdi-email-outline"></i>
+                        آدرس ایمیل : <a href="#">info@gmail.com</a>
+                    </div>
+                    <div class="col-12 text-center mt-2">
+                        <p class="text-secondary text-footer">
+                            استفاده از کارت هدیه یا کد تخفیف، درصفحه ی پرداخت امکان پذیر است.
+                        </p>
+                    </div>
+                    <div class="col-12 text-center">
+                        <div class="copy-right-mini-footer">
+                            Copyright © 2019 GameStore
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End mini-footer -->
+    </div>
+    <!-- Core JS Files -->
+    <!-- Core JS Files -->
+    <script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.min.js' %}"></script>
+    <!-- Plugins -->
+    <script src="{% static 'assets/js/vendor/bootstrap-slider.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/owl.carousel2.thumbs.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/nouislider.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.horizontalmenu.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/countdown.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/wNumb.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/ResizeSensor.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/theia-sticky-sidebar.min.js' %}"></script>
+    <!-- google map js -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script>
+    <script>
+        // When the window has finished loading create our google map below
+        google.maps.event.addDomListener(window, 'load', init);
+
+        function init() {
+            // Basic options for a simple Google Map
+            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+            var mapOptions = {
+                // How zoomed in you want the map to start at (always required)
+                zoom: 11,
+
+                scrollwheel: false,
+
+                // The latitude and longitude to center the map (always required)
+                center: new google.maps.LatLng(23.761226, 90.420766), // New York
+
+                // How you would like to style the map. 
+                // This is where you would paste any style found on Snazzy Maps.
+                styles: [{
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [{
+                            "color": "#444444"
+                        }]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [{
+                            "color": "#f2f2f2"
+                        }]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [{
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 45
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [{
+                            "visibility": "simplified"
+                        }]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [{
+                                "color": "#314453"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry.fill",
+                        "stylers": [{
+                                "lightness": "-12"
+                            },
+                            {
+                                "saturation": "0"
+                            },
+                            {
+                                "color": "#4bc7e9"
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            // Get the HTML DOM element that will contain your map 
+            // We are using a div with id="map" seen below in the <body>
+            var mapNew = document.getElementById('map');
+            var mapEdit = document.getElementById('map-edit');
+
+            // Create the Google Map using our element and options defined above
+            var map = new google.maps.Map(mapNew, mapOptions);
+            var mapEdit = new google.maps.Map(mapEdit, mapOptions);
+
+            // Let's also add a marker while we're at it
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(23.761226, 90.420766),
+                map: map,
+                title: 'Snazzy!'
+            });
+        }
+    </script>
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>

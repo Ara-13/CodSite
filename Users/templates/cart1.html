@@ -1,0 +1,14 @@
+{% extends 'Panel/panel.html' %}
+
+{% block content %}
+<div>
+{% for account in cart_account %}
+کد اکانت:{{account.code}}<br />
+فروشنده:{{account.seller.username}}<br />
+قیمت:{{account.price}}<br />
+-----------------------<br />
+{% endfor %}
+<a href="{% url 'Users:shopping' %}"><button >ثبت نهایی و خرید</button></a>
+</div>
+
+{% endblock %}

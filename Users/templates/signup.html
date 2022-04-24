@@ -1,0 +1,18 @@
+<style>
+    form{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        align-items: center;
+        direction: rtl;
+    }
+</style>
+<form method="post">
+    <h1>ساخت حساب در گیم استور!</h1>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="ساخت حساب" /><br />
+    رمز خود را فراموش کردید؟ <a href="">تغییر رمز عبور</a>
+    قبلا حساب کاربری ساخته اید؟ <a href="{% url 'Users:login' %}" >ورود</a>
+</form>

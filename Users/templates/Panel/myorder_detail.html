@@ -1,0 +1,179 @@
+{% extends 'Panel/mypanel.html' %}
+{% load static %}
+{% load jalali_tags %}
+{% block content %}
+<!-- Start Content -->
+<div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="profile-navbar">
+                <a href="{% url 'Users:UserOrders' %}" class="profile-navbar-btn-back">بازگشت</a>
+                <h4>سفارش <span class="font-en">{{order.order_number}}</span><span>ثبت شده در تاریخ: 14{{order.date|to_jalali:'%y/%m/%d'}}</span></h4>
+            </div>
+            <div class="col-12 mb-4">
+                <div class="dt-sl dt-sn border">
+                    <div class="row table-draught px-3">
+                        <div class="col-md-6 col-sm-12">
+                            <span class="title">تحویل گیرنده:</span>
+                            <span class="value">{{request.user.name}}</span>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <span class="title">شماره تماس تحویل گیرنده:</span>
+                            <span class="value">{{request.user.phone}}</span>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <span class="title">تاریخ ثبت سفارش:</span>
+                            <span class="value">14{{order.date|to_jalali:'%y/%m/%d'}}</span>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <span class="title">زمان تحویل:</span>
+                            <span class="value">تا 5 دقیقه الی 2 روز بعد از ثبت سفارش</span>
+                        </div>
+                        <div class="col-12 text-center pb-0">
+                            <span class="title">مبلغ کل سفارش:</span>
+                            <span class="value">{{order.final_price}} تومان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-4">
+            <section class="slider-section dt-sl mb-5">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="section-title text-sm-title title-wide no-after-title-wide">
+                            <h2>وضعیت کنونی سفارش</h2>
+                        </div>
+                    </div>
+
+                    <!-- Start Profile-order-step-Slider -->
+                    <div class="col-12">
+                        <div class="profile-order-steps carousel-lg owl-carousel owl-theme">
+                                {% if order.status != 'cl' %}
+                                <div class="item profile-order-steps-item is-active">
+                                    <img src="{% static 'assets/img/svg/0eab59b0.svg' %}">
+                                    <span>ثبت شده</span>
+                                </div>
+                                {% if order.status == 'w4ti' %}
+                                <div  class="item profile-order-steps-item is-active">
+                                    <img src="{% static 'assets/img/svg/0eab59b0.svg' %}">
+                                    <span>در انتظار اصلاح اطلاعات توسط کاربر</span>
+                                </div>
+                                {% endif %}
+                                <div {% if order.status == 'dn' %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/d5d5e1d2.svg' %}">
+                                    <span>تایید سفارش</span>
+                                </div>
+                                <div {% if order.status == 'dn' %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/3db3cdeb.svg' %}">
+                                    <span>آماده‌سازی سفارش</span>
+                                </div>
+                                <div {% if order.status == 'dn' %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/50450a73.svg' %}">
+                                    <span>تحویل سفارش</span>
+                                </div>
+                                <div {% if order.status == 'dn' %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/50450a73.svg' %}">
+                                    <span>انجام شده</span>
+                                </div>
+                                {% else %}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Profile-order-step-Slider -->
+
+                </div>
+            </section>
+        </div>
+        <div class="col-12">
+            <div
+                class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
+                <h2>جزئیات سفارش</h2>
+            </div>
+            <div class="dt-sl">
+                <div class="table-responsive">
+                    {% if accounts %}
+                    <table class="table table-order table-order-details">
+                        <thead>
+                            <tr>
+                                <th>کد آگهی</th>
+                                <th>اکانت</th>
+                                <th>فروشنده</th>
+                                <th>دسته</th>
+                                <th>قیمت اکانت</th>
+                                <th>کمیسیون سایت</th>
+                                <th>قیمت نهایی</th>
+                                <th>عملیات پرداخت</th>
+                            </tr>
+                        </thead>
+                        {% for account in accounts %}
+                        <tbody>
+                            <tr>
+                                <td>{{account.code}}</td>
+                                <td>
+                                    <div class="details-product-area">
+                                        <img src="{{account.picture.url}}" style="width: 150px; height: 150px;
+                                        object-fit: cover; object-position: center; border-radius: 5px;"
+                                            class="thumbnail-product" alt="">
+                                    </div>
+                                </td>
+                                <td>{{account.seller}}@</td>
+                                <td>{{account.get_group_display}}</td>
+                                <td>{{account.price| add:'-50000'}} تومان</td>
+                                <td>50,000 تومان</td>
+                                <td>{{account.price}} تومان</td>
+                                <td>---</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                    {% if products %}
+                    <table class="table table-order table-order-details">
+                        <thead>
+                            <tr>
+                                <th>کالا</th>
+                                <th>دسته</th>
+                                <th>نام کالا</th>
+                                <th>تعداد</th>
+                                <th>قیمت واحد</th>
+                                <th>قیمت کل</th>
+                                <th>تخفیف</th>
+                                <th>قیمت نهایی</th>
+                                <th>عملیات پرداخت</th>
+                            </tr>
+                        </thead>
+                        {% for product in products %}
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="{{product.image.url}}" style="width: 150px; height: 150px;
+                                    object-fit: cover; object-position: center; border-radius: 5px;"
+                                        class="thumbnail-product" alt="">
+                                </td>
+                                <td>{{product.group}}</td>
+                                <td>{{product.name}}</td>
+                                <td>---</td>
+                                <td>{{product.price}} تومان</td>
+                                <td>{{product.price}} تومان</td>
+                                <td>---</td>
+                                <td>{{product.price}} تومان</td>
+                                <td>
+                                    ---
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Content -->
+{% endblock %}

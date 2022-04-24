@@ -1,0 +1,24 @@
+<html>
+<head>
+
+</head>
+<body style="direction: rtl;">
+<div style="float:right; margin-left: 50px;">
+    <div>
+        <h1>{{user.name}}</h1> <br/>
+        <h2>!به پنل کاربریتان خوش آمدید</h2>
+    </div>
+    <ul>
+        <li><a href="{% url 'Users:UserPanel' %}">اطلاعات من</a></li>
+        <li><a href="{% url 'Users:cart' %}">سبد خرید من</a></li>
+        <li><a href="{% url 'Users:UserAccounts' %}">اکانت های من</a></li>
+        <li><a href="#">سفارشات من</a></li>
+        <li><a href="{% url 'Users:logout' %}">خروج از حساب</a></li>
+    </ul>
+</div>
+<div style="float:right">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

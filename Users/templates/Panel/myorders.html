@@ -1,0 +1,50 @@
+{% extends 'Panel/mypanel.html' %}
+{% load jalali_tags %}
+
+{% block content %}
+<!-- Start Content -->
+<div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
+    <div class="row">
+        <div class="col-12">
+            <div
+                class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
+                <h2>همه سفارش‌ها</h2>
+            </div>
+            <div class="dt-sl">
+                <div class="table-responsive">
+                    <table class="table table-order">
+                        <thead>
+                            <tr>
+                                <th>شماره سفارش</th>
+                                <th>شماره فاکتور</th>
+                                <th>تاریخ ثبت سفارش</th>
+                                <th>مبلغ کل</th>
+                                <th>وضعیت سفارش</th>
+                                <th>مشاهده جزئیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in user_orders %}
+                            <tr>
+                                <td>{{order.order_number}}</td>
+                                <td>{{order.factor_number}}</td>
+                                <td>14{{order.date|to_jalali:'%y/%m/%d'}}</td>
+                                <td>{{order.final_price}} تومان</td>
+                                <td>{{order.get_status_display}}</td>
+                                <td class="details-link">
+                                    <a href="{% url 'Users:UserOrderDetail' order.order_number %}">
+                                        <i class="mdi mdi-chevron-left"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Content -->
+</div>
+{% endblock %}

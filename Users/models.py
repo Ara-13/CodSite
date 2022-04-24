@@ -70,7 +70,10 @@ class User(AbstractBaseUser):
          return self.email
 
     def __str__(self):              # __unicode__ on Python 2
-         return self.username
+        if self.username:
+            return self.username
+        else:
+            return self.email
 
     @staticmethod
     def has_perm(perm, obj=None):

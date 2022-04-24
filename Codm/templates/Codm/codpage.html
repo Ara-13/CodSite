@@ -1,15 +1,57 @@
-{% extends 'Codm/base.html' %}
 {% load static %}
-
-{% block content %}
-<script>
-    function AutoScroll() {
-    location.replace("#show")
-    }
-</script>
 <link type="text/css" rel="stylesheet" href="{% static 'codpage.css' %}" />
-<div onload="AutoScroll()">
+<div>
         <div class="top-container">
+            <h2>Automatic Slideshow</h2>
+            <p>Change image every 2 seconds:</p>
+
+            <div class="slideshow-container">
+
+            <div class="mySlides fade">
+            <img src="{% static 'pictures/codm-banner.png' %}" style="width:100%;object-fit: cover;
+            object-position: center;">
+            </div>
+
+            <div class="mySlides fade">
+            <img src="{% static 'pictures/codm-poster.jpg' %}" style="width:100%;object-fit: cover;
+            object-position: center;">
+            </div>
+
+            <div class="mySlides fade">
+            <img src="{% static 'pictures/codm-wallpaper.jpg' %}" style="width:100%;object-fit: cover;
+            object-position: center;">
+            </div>
+
+            </div>
+            <br>
+
+            <div style="text-align:center">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            </div>
+
+            <script>
+            var slideIndex = 0;
+            showSlides();
+
+            function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+            setTimeout(showSlides, 3000); // Change image every 2 seconds
+            }
+            </script>
         </div>
         <div class="logo-container">
             <img src="{% static 'pictures/codm-logo.png' %}" alt="logo" />
@@ -79,7 +121,7 @@
                     <!--{{سیوها}}-->
                     {{account.price}}تومان<br /></a>
                     {% if account.status == 'available' %}
-                    <a href="{% url 'Codm:addtocart' account.code %}">خرید</a>
+                    <a href="{% url 'Users:addtocart' account.code %}">افزودن به سبد خرید</a>
                     <a href="">ارسال پیام</a><br />
                     {% endif %}
                 </li>
@@ -91,4 +133,3 @@
             </ul>
         </div>
 </div>
-{% endblock %}

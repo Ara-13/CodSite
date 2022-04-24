@@ -1,28 +1,805 @@
-<!DOCTYPE html>
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/jquery.fancybox.min.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/owl.carousel.min.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'home_extensions/css/owl.theme.default.min.css' %}"/>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container"> <a href="#"> <img src="{% static 'pictures/main-logo.jpg' %}" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"> </a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item"> <a class="nav-link" href="" data-scroll-nav="0">خانه</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="1">درباره ما</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="2">خدمات و امکانات</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="3">کار</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="4">پشتیبانی</a> </li>
-                </ul>
-              </div>
+<!-- Start header -->
+<header class="main-header">
+    <!-- Start ads -->
+    <div class="ads-header-wrapper">
+        {% include 'Codm/loading.html' %}
+        {% include 'Users/messages.html' %}
+    </div>
+    <!-- End ads -->
+    <!-- Start topbar -->
+    <div class="container main-container">
+        <div class="topbar dt-sl">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-6">
+                    <div class="logo-area">
+                        <a href="{% url 'Codm:home' %}">
+                            <img src="{% static 'assets/img/logo.jpg' %}" style="height: 35px" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5 hidden-sm">
+                    <div class="search-area dt-sl">
+                        <form method="get" action="" class="search" style="height: 40px; margin-right: 20px;">
+                            <input type="text"
+                                placeholder="نام کالا، اکانت و یا دسته مورد نظر خود را جستجو کنید…"
+                                name="Q">
+                            <i class="far fa-search search-icon"></i>
+                            <button class="close-search-result" type="button"><i
+                                    class="mdi mdi-close"></i></button>
+                            <!--<div class="search-result">
+                                
+                                <ul>
+                                    <li>
+                                        <a href="#">موبایل</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">مد و پوشاک</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">میکروفن</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">میز تلویزیون</a>
+                                    </li>
+                                </ul>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 topbar-left">
+                    <ul class="nav float-left">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item account dropdown">
+                            <a class="nav-link" href="{% url 'Users:UserPanel' %}" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                {% if HomePage %}<span class="label-dropdown">{{request.user.name}}</span>{% else %}
+                                <span class="label-dropdown">{{request.user.name}}</span>{% endif %}
+                                <i class="mdi mdi-account-circle-outline"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                                <a class="dropdown-item" href="{% url 'Users:UserPanel' %}">
+                                    <i class="mdi mdi-account-card-details-outline"></i>پروفایل
+                                </a>
+                                <a class="dropdown-item" href="{% url 'Users:UserEdit' %}">
+                                    <i class="mdi mdi-account-edit-outline"></i>ویرایش حساب کاربری
+                                </a>
+                                <a class="dropdown-item" href="{% url 'Users:UserOrders' %}">
+                                    <i class="mdi mdi-basket"></i>سفارشات من
+                                </a>
+                                <div class="dropdown-divider" role="presentation"></div>
+                                <a class="dropdown-item" href="{% url 'Users:logout' %}">
+                                    <i class="mdi mdi-logout-variant"></i>خروج
+                                </a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item account dropdown">
+                            <a class="nav-link" href="{% url 'Users:login' %}">
+                                <span class="label-dropdown">ورود / ثبت نام</span>
+                                <i class="mdi mdi-account-circle-outline"></i>
+                            </a>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        </nav>
-    </body>
-</html>
+        </div>
+    </div>
+    <!-- End topbar -->
+
+    <!-- Start bottom-header -->
+    <div class="bottom-header dt-sl mb-sm-bottom-header">
+        <div class="container main-container">
+            <!-- Start Main-Menu -->
+            <nav class="main-menu d-flex justify-content-md-between justify-content-end dt-sl">
+                <ul class="list hidden-sm">
+                    <li class="list-item category-list">
+                        <a href="#"><i class="fal fa-bars ml-1"></i>دسته بندی کالاها</a>
+                        <ul>
+                            <li>
+                                <a href="#">کالای دیجیتال</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">اسپیکر بلوتوث و با سیم</a></li>
+                                    <li class="sublist--title"><a href="#">هارد، فلش و SSD</a></li>
+                                    <li class="sublist--title"><a href="#">دوربین</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین عکاسی دیجیتال</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین‌ ورزشی و فیلم برداری</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین‌ چاپ سریع</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی دوربین</a></li>
+                                    <li class="sublist--item"><a href="#">لنز</a></li>
+                                    <li class="sublist--item"><a href="#">کیف</a></li>
+                                    <li class="sublist--item"><a href="#">کارت حافظه</a></li>
+                                    <li class="sublist--item"><a href="#">کاغذ چاپ عکس</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین دوچشمی و شکاری</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">اسپیکر بلوتوث و با سیم</a></li>
+                                    <li class="sublist--title"><a href="#">هارد، فلش و SSD</a></li>
+                                    <li class="sublist--title"><a href="#">دوربین</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین عکاسی دیجیتال</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین‌ ورزشی و فیلم برداری</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین‌ چاپ سریع</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی دوربین</a></li>
+                                    <li class="sublist--item"><a href="#">لنز</a></li>
+                                    <li class="sublist--item"><a href="#">کیف</a></li>
+                                    <li class="sublist--item"><a href="#">کارت حافظه</a></li>
+                                    <li class="sublist--item"><a href="#">کاغذ چاپ عکس</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین دوچشمی و شکاری</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">خودرو، ابزار و تجهیزات صنعتی</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">مد و پوشاک</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">زیبایی و سلامت</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">خانه و آشپزخانه</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">لنز</a></li>
+                                    <li class="sublist--item"><a href="#">کیف</a></li>
+                                    <li class="sublist--item"><a href="#">کارت حافظه</a></li>
+                                    <li class="sublist--item"><a href="#">کاغذ چاپ عکس</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین دوچشمی و شکاری</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">کتاب، لوازم تحریر و هنر</a>
+                                <ul class="row">
+                                    <li class="sublist--item"><a href="#">کارت حافظه</a></li>
+                                    <li class="sublist--item"><a href="#">کاغذ چاپ عکس</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین دوچشمی و شکاری</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">اسباب بازی، کودک و نوزاد</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">لنز</a></li>
+                                    <li class="sublist--item"><a href="#">کیف</a></li>
+                                    <li class="sublist--item"><a href="#">کارت حافظه</a></li>
+                                    <li class="sublist--item"><a href="#">کاغذ چاپ عکس</a></li>
+                                    <li class="sublist--item"><a href="#">دوربین دوچشمی و شکاری</a></li>
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">واقعیت مجازی</a></li>
+                                    <li class="sublist--title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">ورزش و سفر</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--item"><a href="#">پایه نگهدارنده گوشی</a></li>
+                                    <li class="sublist--title"><a href="#">گوشی موبایل</a></li>
+                                    <li class="sublist--item"><a href="#">سامسونگ</a></li>
+                                    <li class="sublist--item"><a href="#">هوآوی</a></li>
+                                    <li class="sublist--item"><a href="#">اپل</a></li>
+                                    <li class="sublist--item"><a href="#">شیائومی</a></li>
+                                    <li class="sublist--item"><a href="#">آنر</a></li>
+                                    <li class="sublist--item"><a href="#">نوکیا</a></li>
+                                    <li class="sublist--title"><a href="#">هدفون، هدست، هندزفری</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">خوردنی و آشامیدنی</a>
+                                <ul class="row">
+                                    <li class="sublist--title"><a href="#">لوازم جانبی گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">کیف و کاور گوشی</a></li>
+                                    <li class="sublist--item"><a href="#">پاور بانک (شارژر همراه)</a></li>
+                                    <li class="sublist--title"><a href="#">برندها</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- mega menu 3 column -->
+                    <li class="list-item list-item-has-children mega-menu mega-menu-col-3">
+                        <a class="nav-link" href="#">بهداشت و سلامت</a>
+                        <ul class="sub-menu nav">
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو چهار</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو پنج</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو شش</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو هفت</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو چهار</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو پنج</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو شش</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#"><i class="mdi mdi-brightness-percent"></i>
+                                            زیر منو هفت</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-item">
+                                <a href="#">
+                                    <img src="./assets/img/theme/mega-menu.jpg" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- mega menu 4 column -->
+                    <li class="list-item list-item-has-children mega-menu mega-menu-col-4">
+                        <a class="nav-link" href="#">ابزار و اداری</a>
+                        <ul class="sub-menu nav">
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو چهار</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو پنج</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو شش</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو هفت</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو هشت</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو نه</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو چهار</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو پنج</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو شش</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو هفت</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو چهار</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو پنج</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو شش</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">عنوان دسته</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو چهار</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- dropdown-menu -->
+                    <li class="list-item list-item-has-children menu-col-1">
+                        <a class="nav-link" href="#">خانه و آشپزخانه</a>
+                        <ul class="sub-menu nav">
+                            <li class="list-item">
+                                <a class="nav-link" href="#">زیر منو یک</a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav-link" href="#">زیر منو دو</a>
+                            </li>
+                            <li class="list-item list-item-has-children">
+                                <a class="nav-link" href="#">زیر منو سه</a>
+                                <ul class="sub-menu nav">
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه - یک</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه - دو</a>
+                                    </li>
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">زیر منو سه - سه</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-item">
+                        <a class="nav-link" href="#">ورزش و سفر</a>
+                    </li>
+                </ul>
+                
+                <div class="nav">
+                    {% if page != 'cart' %}
+                    <div class="nav-item cart--wrapper">
+                        
+                        <a class="nav-link" href="{% url 'Users:cart' %}">
+                            <span class="label-dropdown">سبد خرید</span>
+                            <i class="mdi mdi-cart-outline"></i>
+                            {% if request.user.is_authenticated %}
+                            <span class="count">{{request.user.cart.product.count | add:request.user.cart.account.count}}</span>
+                            {% endif %}
+                        </a>
+                        {% if request.user.is_authenticated %}
+                        {% if request.user.cart.product.count != 0 or request.user.cart.product.count != 0  %}
+                        <div class="header-cart-info">
+                            <div class="header-cart-info-header">
+                                <div class="header-cart-info-count">
+                                    <span class="count">{{request.user.cart.product.count | add:request.user.cart.account.count}}</span>کالا
+                                </div>
+                                <a href="{% url 'Users:cart' %}" class="header-cart-info-link">
+                                    <span>مشاهده سبد خرید</span>
+                                </a>
+                            </div>
+                            <div class="header-cart-info-footer">
+                                <div class="header-cart-info-total">
+                                    <span class="header-cart-info-total-text">مبلغ قابل پرداخت:</span>
+                                    <p class="header-cart-info-total-amount">
+                                        <span class="header-cart-info-total-amount-number">
+                                            {{request.user.cart.final_price}} <span>تومان</span></span>
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <a href="#" class="header-cart-info-submit">
+                                        ثبت سفارش
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <button class="btn-menu">
+                    <div class="align align__justify">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <div class="side-menu">
+                    <div class="logo-nav-res dt-sl text-center">
+                        <a href="#">
+                            <img src="assets/img/logo.png" alt="">
+                        </a>
+                    </div>
+                    <div class="search-box-side-menu dt-sl text-center mt-2 mb-3">
+                        <form action="">
+                            <input type="text" name="s" placeholder="جستجو کنید...">
+                            <i class="mdi mdi-magnify"></i>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav dt-sl">
+                        <li class="sub-menu">
+                            <a href="#">کالای دیجیتال</a>
+                            <ul>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="#">بهداشت و سلامت</a>
+                            <ul>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="#">ابزار و اداری</a>
+                            <ul>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li>
+                                    <a href="#">عنوان دسته</a>
+                                </li>
+                                <li class="sub-menu">
+                                    <a href="#">عنوان دسته</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">زیر منو یک</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو دو</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو سه</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">زیر منو چهار</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">مد و پوشاک</a>
+                        </li>
+                        <li>
+                            <a href="#">خانه و آشپزخانه</a>
+                        </li>
+                        <li>
+                            <a href="#">ورزش و سفر</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="overlay-side-menu">
+                </div>
+            </nav>
+            <!-- End Main-Menu -->
+        </div>
+    </div>
+    <!-- End bottom-header -->
+</header>

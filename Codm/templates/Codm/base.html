@@ -1,23 +1,61 @@
-<html>
-    <head>
-        {% load static %}
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="HandheldFriendly" content="true">
-        <link type="text/css" rel="stylesheet" href="{% static 'Codm/main.css' %}"/>
-        <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
-        <title>Game Center</title>
-    </head>
+<!DOCTYPE html>
+<html lang="fa">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f7858d">
+    <meta name="msapplication-navbutton-color" content="#f7858d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f7858d">
+    <!--SiteLogo-->
+    <link rel="icon" href="{% static 'assets/img/logo1.jpg' %}" type="image/logo" />
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap.min.css' %}">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap-slider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/jquery.horizontalmenu.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+</head>
         
-    <body direction="rtl">
-        <div>
-        {% include 'Codm/topbar.html' %}
+    <body>
+        <div class="wrapper">
+            <!-- Start header -->
+            {% include 'Codm/navbar.html' %}
+            <!-- End header -->
+            <!-- Start main-content -->
+            {% block content %}
+            {% endblock %}
+            <!-- End main-content -->
+            {% include 'Codm/bottombar.html' %}
         </div>
-        <div>
-            {% block content %}{% endblock %}
-        </div>
+    <!-- Core JS Files -->
+    <script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.min.js' %}"></script>
+    <!-- Plugins -->
+    <script src="{% static 'assets/js/vendor/bootstrap-slider.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/owl.carousel2.thumbs.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/nouislider.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.horizontalmenu.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/countdown.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/wNumb.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/ResizeSensor.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/theia-sticky-sidebar.min.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
     </body>
 </html>

@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +43,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Codm.apps.CodmConfig',
     'Users.apps.UsersConfig',
+    'Products.apps.ProductsConfig',
     'django.contrib.admin',
     'jalali_date',
     'django.contrib.auth',
@@ -124,6 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT ='/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -153,3 +166,11 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
+
+USE_THOUSAND_SEPARATOR=True
+
+THOUSAND_SEPARATOR=','
+
+DECIMAL_SEPARATOR='.'
+
+NUMBER_GROUPING=3

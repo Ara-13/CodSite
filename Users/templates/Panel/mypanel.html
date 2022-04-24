@@ -1,0 +1,210 @@
+<html>
+    {% load static %}
+    {% load jalali_tags %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="theme-color" content="#f7858d">
+        <meta name="msapplication-navbutton-color" content="#f7858d">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#f7858d">
+        <title>GameStore | UserPanel</title>
+        <!-- Font Icon -->
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/materialdesignicons.min.css' %}">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap.min.css' %}">
+        <!-- Plugins -->
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap-slider.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/jquery.horizontalmenu.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/fancybox.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
+        <!-- Main CSS File -->
+        <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+    </head>
+    <body>
+        <div class="wrapper">
+            {% include 'Codm/navbar.html' %}
+            <main class="main-content dt-sl mb-3">
+                <div class="container main-container">
+                    <div class="row">
+                        <!-- Start Sidebar -->
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 sticky-sidebar">
+                            <div class="profile-sidebar dt-sl">
+                                <div class="dt-sl dt-sn border mb-3">
+                                    <div class="profile-sidebar-header dt-sl">
+                                        <div class="d-flex align-items-center">
+                                            <div class="profile-avatar">
+                                                <img src="{% static 'assets/img/theme/avatar.png' %}" alt="">
+                                            </div>
+                                            <div class="profile-header-content mr-3 mt-2">
+                                                <span class="d-block profile-username">{{user.username}}@</span>
+                                                <span class="d-block profile-phone">0{{user_phone}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="profile-point mt-3 mb-2 dt-sl">
+                                        </div>
+                                        <div class="profile-link mt-2 dt-sl">
+                                            <div class="row">
+                                                <div class="col-6 text-center">
+                                                    <a href="#">
+                                                        <i class="mdi mdi-lock-reset"></i>
+                                                        <span class="d-block">تغییر رمز</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <a href="{% url 'Users:logout' %}">
+                                                        <i class="mdi mdi-logout-variant"></i>
+                                                        <span class="d-block">خروج از حساب</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dt-sl dt-sn mb-3 text-center">
+                                    <a href="#">
+                                        <img src="./assets/img/banner/sidebar-banner-3.jpg" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="dt-sl dt-sn border mb-3">
+                                    <div class="profile-menu-section dt-sl">
+                                        <div class="label-profile-menu mt-2 mb-2">
+                                            <span>حساب کاربری شما</span>
+                                        </div>
+                                        <div class="profile-menu">
+                                            <ul>
+                                                <li>
+                                                    {% if page == 'base' %}
+                                                    <a href="{% url 'Users:UserPanel' %}" class="active">
+                                                    {% else %}
+                                                    <a href="{% url 'Users:UserPanel' %}">
+                                                    {% endif %}
+                                                        <i class="mdi mdi-account-circle-outline"></i>
+                                                        پروفایل من
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    {% if page == 'editinfo' %}
+                                                    <a href="{% url 'Users:UserEdit' %}" class="active">
+                                                    {% else %}
+                                                    <a href="{% url 'Users:UserEdit' %}">
+                                                    {% endif %}
+                                                        <i class="mdi mdi-account-edit-outline"></i>
+                                                        تغییر اطلاعات شخصی
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    {% if page == 'orders' %}
+                                                    <a href="{% url 'Users:UserOrders' %}" class="active">
+                                                    {% else %}
+                                                    <a href="{% url 'Users:UserOrders' %}">
+                                                    {% endif %}
+                                                        <i class="mdi mdi-basket"></i>
+                                                        سفارش های من
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    {% if page == 'accounts' %}
+                                                    <a href="{% url 'Users:UserAccounts' %}" class="active">
+                                                    {% else %}
+                                                    <a href="{% url 'Users:UserAccounts' %}">
+                                                    {% endif %}
+                                                        <i class="fal fa-sticky-note" style="margin-top: 0.50px;"></i> 
+                                                        اکانت های من
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'Users:cart' %}">
+                                                        <i class="mdi mdi-cart-outline"></i>
+                                                        سبد خرید من
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Sidebar -->
+                        <!-- Start Content -->
+                        {% block content %}
+                        {% endblock %}
+                        <!-- End Content -->
+                    </div>
+                    <!-- Start Product-Slider -->
+                    <section class="slider-section dt-sl mt-5 mb-5">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="section-title text-sm-title title-wide no-after-title-wide">
+                                    <h2>محصولات پیشنهادی برای شما</h2>
+                                    <a href="{% url 'Codm:codm' 'codm' '1' %}">مشاهده همه</a>
+                                </div>
+                            </div>
+    
+                            <!-- Start Product-Slider -->
+                            <div class="col-12 px-res-0">
+                                <div class="product-carousel carousel-lg owl-carousel owl-theme">
+                                    {% for account in suggestion %}
+                                    <div class="item">
+                                        <div class="product-card mb-3">
+                                            <div class="product-head">
+                                                <div class="rating-stars">
+                                                </div>
+                                                <div class="discount">
+                                                    <span></span>
+                                                </div>
+                                            </div>
+                                            <a class="product-thumb" href="{% url 'Codm:account' account.code %}">
+                                                {% if account.picture %}
+                                                <img src="{{ account.picture.url }}" alt="Product Thumbnail"
+                                                style="width:300px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                {% else %}
+                                                <img src="{% static 'assets/img/banner/codm1.jpg' %}" alt="Product Thumbnail"
+                                                style="width:300px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                {% endif %}
+                                            </a>
+                                            <div class="product-card-body">
+                                                <h5 class="product-title">
+                                                    <a href="{% url 'Codm:account' account.code %}">کد آگهی: {{account.code}}</a>
+                                                </h5>
+                                                <a class="product-meta" href="shop-categories.html">اکانت کالاف دیوتی موبایل</a>
+                                                <span class="product-price">{{account.price}} تومان</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            <!-- End Product-Slider -->
+    
+                        </div>
+                    </section>
+                    <!-- End Product-Slider -->
+                </div>
+            </main>
+        </div>
+        {% include 'Codm/bottombar.html' %}
+        <script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/bootstrap.min.js' %}"></script>
+        <!-- Plugins -->
+        <script src="{% static 'assets/js/vendor/bootstrap-slider.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/owl.carousel2.thumbs.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/jquery.nicescroll.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/nouislider.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/jquery.horizontalmenu.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/jquery.fancybox.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/countdown.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/wNumb.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/ResizeSensor.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/theia-sticky-sidebar.min.js' %}"></script>
+        <!-- Main JS File -->
+        <script src="{% static 'assets/js/main.js' %}"></script>
+    </body>
+</html>

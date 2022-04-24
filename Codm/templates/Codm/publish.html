@@ -1,13 +1,14 @@
-{% extends 'Codm/base.html' %}
-
-{% block content %}
-<div style="position: absolute; top: 50%">
+<div style="position: absolute; top: 100%; left: 50%; transform:translate(-50%, -50%); direction: rtl;">
     <form method="POST">
         {% csrf_token %}
-        {{code}}
+        کد آگهی شما: {{code}}
         {{form.as_p}}
+        {{form2.as_p}}
+        {{videoform.as_p}}
+        {{imageform1.as_p}}
+        {{imageform2.as_p}}
+        {{imageform3.as_p}}
         {{linkform.as_p}}
         <input type="submit" value="آگهی اکانت"/><br />
     </form>
 </div>
-{% endblock %}

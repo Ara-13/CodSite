@@ -1,0 +1,181 @@
+{% extends 'Codm/base.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+{% block content %}
+<title>GameStore | UserCart</title>
+<!-- Start main-content -->
+<main class="main-content dt-sl mb-3">
+    <div class="container main-container">
+        <div class="row mx-0">
+            <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 mb-2">
+                <nav class="tab-cart-page">
+                    <div class="nav nav-tabs border-bottom" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link d-inline-flex w-auto active" id="nav-home-tab"
+                            data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                            aria-selected="true">سبد خرید شما<span class="count-cart">{{n}}</span></a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-12">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                        aria-labelledby="nav-home-tab">
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-8 col-12 px-0">
+                                <div class="table-responsive checkout-content dt-sl">
+                                    <div class="checkout-header checkout-header--express">
+                                        <span class="checkout-header-title">سبد خرید</span>
+                                        <span class="checkout-header-extra-info">({{n}} کالا)</span>
+                                    </div>
+                                    <table class="table table-cart">
+                                        <tbody>
+                                            {% if cart_account %}
+                                            {% for account in cart_account %}
+                                            <tr class="checkout-item border-bottom">
+                                                <td>
+                                                    {% if account.picture %}
+                                                    <img src="{{ account.picture.url }}" alt=""
+                                                    style="width:200px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                    {% else %}
+                                                    <img src="{% static 'assets/img/banner/codm1.jpg' %}" alt=""
+                                                    style="width:200px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                    {% endif %}
+                                                    <a href="{% url 'Users:removefromcart' account.code %}" /><button class="checkout-btn-remove" >&times;</button></a>
+                                                </td>
+                                                <td class="text-right">
+                                                    <a href="#">
+                                                        <h3 class="checkout-title">
+                                                            کد آگهی: {{account.code}}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="checkout-dealer">
+                                                        فروشنده: {{account.seller}}@
+                                                    </p>
+                                                    <p class="checkout-dealer">
+                                                        تاریخ انتشار: 14{{account.pub_date|to_jalali:'%y/%m/%d'}}
+                                                    </p>
+                                                    <p class="checkout-guarantee"></p>
+                                                    <div class="checkout-variant checkout-variant--color">
+                                                        <span class="checkout-variant-title">دسته :</span>
+                                                        کالاف دیوتی موبایل
+                                                    </div>
+                                                    <p></p>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td><strong> قیمت: {{account.price}} تومان</strong></td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+
+
+                                            {% if cart_product %}
+                                            {% for product in cart_product %}
+                                            <tr class="checkout-item border-bottom">
+                                                <td>
+                                                    {% if product.image %}
+                                                    <img src="{{ product.image.url }}" alt=""
+                                                    style="width:200px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                    {% else %}
+                                                    <img src="{% static 'assets/img/banner/codm1.jpg' %}" alt=""
+                                                    style="width:200px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
+                                                    {% endif %}
+                                                    <a href="{% url 'Products:PRC' product.group.tag product.code %}"<button class="checkout-btn-remove">&times;</button>
+                                                </td>
+                                                <td class="text-right">
+                                                    <a href="#">
+                                                        <h3 class="checkout-title">
+                                                            نام کالا: {{product.name}}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="checkout-dealer">
+                                                        فروشنده: GameStore
+                                                    </p>
+                                                    <p class="checkout-guarantee"></p>
+                                                    <div class="checkout-variant checkout-variant--color">
+                                                        <span class="checkout-variant-title">دسته :</span>
+                                                        {{product.group}}
+                                                    </div>
+                                                    <p></p>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td><strong> قیمت: {{product.price}} تومان</strong></td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-12 w-res-sidebar sticky-sidebar">
+                                <div class="dt-sn dt-sn--box border mb-2">
+                                    <ul class="checkout-summary-summary">
+                                        <li>
+                                            <span>مبلغ کل ({{n}} کالا)</span><span>{{cart.final_price}} تومان</span>
+                                        </li>
+                                        <li class="checkout-summary-discount">
+                                            <span>سود شما از خرید</span><span><span>(x٪)</span>y
+                                                تومان</span>
+                                        </li>
+                                        <li class="checkout-club-container">
+                                            <span>سابقه خرید شما از سایت<span class="help-sn" data-toggle="tooltip"
+                                                    data-html="true" data-placement="bottom"
+                                                    title="<div class='help-container is-right'><div class='help-arrow'></div><p class='help-text'>با افزایش سابقه خرید و فروش در سایت، می توانید مشمول دریافت هدایا و امکانات بیشتر در سایت شوید.</p></div>">
+                                                    <span class="mdi mdi-information-outline"></span>
+                                                </span></span><span><span>{{n}}+</span></span>
+                                        </li>
+                                    </ul>
+                                    <div class="checkout-summary-devider">
+                                        <div></div>
+                                    </div>
+                                    <div class="checkout-summary-content">
+                                        <div class="checkout-summary-price-title">مبلغ قابل پرداخت:</div>
+                                        <div class="checkout-summary-price-value">
+                                            <span class="checkout-summary-price-value-amount">{{cart.final_price}}</span>
+                                            تومان
+                                        </div>
+                                        <a href="{% url 'Users:cart_continue' %}" class="mb-2 d-block">
+                                            <button class="btn-primary-cm btn-with-icon w-100 text-center pr-0">
+                                                <i class="mdi mdi-arrow-left"></i>
+                                                ادامه ثبت سفارش
+                                            </button>
+                                        </a>
+                                        <div>
+                                            <span>
+                                                کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش
+                                                مراحل بعدی را تکمیل کنید.
+                                            </span><span class="help-sn" data-toggle="tooltip" data-html="true"
+                                                data-placement="bottom"
+                                                title="<div class='help-container is-right'><div class='help-arrow'></div><p class='help-text'>محصولات موجود در سبد خرید شما تنها در صورت ثبت و پرداخت سفارش برای شما رزرو می‌شوند. در صورت عدم ثبت سفارش، گیم استور هیچگونه مسئولیتی در قبال تغییر قیمت یا موجودی این کالاها ندارد.</p></div>">
+                                                <span class="mdi mdi-information-outline"></span>
+                                            </span></div>
+                                    </div>
+                                </div>
+                                <div class="dt-sn dt-sn--box checkout-feature-aside pt-4">
+                                    <ul>
+                                        <li class="checkout-feature-aside-item">
+                                            <img src="./assets/img/svg/return-policy.svg" alt="">
+                                            هفت روز ضمانت تعویض
+                                        </li>
+                                        <li class="checkout-feature-aside-item">
+                                            <img src="./assets/img/svg/payment-terms.svg" alt="">
+                                            پرداخت در محل با کارت بانکی
+                                        </li>
+                                        <li class="checkout-feature-aside-item">
+                                            <img src="./assets/img/svg/delivery.svg" alt="">
+                                            تحویل اکسپرس
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- End main-content -->
+{% endblock %}

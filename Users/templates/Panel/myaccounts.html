@@ -1,0 +1,84 @@
+{% extends 'Panel/mypanel.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+{% block content %}
+    <!-- Start Content -->
+    <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    تا حداکثر 3 اکانت می توانید در سایت آگهی کنید
+                </p>
+                <a href="{% url 'Codm:publish-account' 'Codm' %}">آگهی اکانت</a><br />
+            </div>
+                <div
+                    class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
+                    <h2>آگهی های شما</h2>
+                </div>
+                <div class="dt-sl">
+                    <div class="row">
+                        {% for account in user_accounts %}
+                        {% if account.status != 'canceled' %}
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card-horizontal-product border-bottom rounded-0">
+                                <div class="card-horizontal-product-thumb">
+                                    <a href="{% url 'Codm:account' account.code %}">
+                                        <img {% if account.picture %} src="{{account.picture.url}}" {% else %}
+                                        src="{% static 'assets/img/banner/codm1.jpg' %}"{% endif %}
+                                        style="height: 200px; width: 200px; object-fit: cover; border-radius: 5px;
+                                        object-position: center;" alt="Product Thumbnail">
+                                    </a>
+                                </div>
+                                <div class="card-horizontal-product-content">
+                                    <div class="card-horizontal-product-title">
+                                        <a href="#">
+                                            <h3>کد آگهی: {{account.code}}</h3>
+                                        </a>
+                                    </div>
+                                    <div class="rating-stars">
+                                        وضعیت آگهی: {{account.get_status_display}}
+                                    </div>
+                                    <div class="card-horizontal-product-price">
+                                        قیمت شما: <span>{{account.price | add:'-50000'}} تومان</span><br />
+                                        حق واسطه گری سایت: <span>50,000 تومان</span><br />
+                                        قیمت نهایی آگهی در سایت: <span>{{account.price}} تومان</span>
+                                    </div>
+                                    {% if account.status != 'sold' %}
+                                    <div class="card-horizontal-product-buttons">
+                                        <a href="#" class="btn">ویرایش آگهی</a>
+                                        <button class="remove-btn" data-toggle="modal"
+                                        data-target="#remove-location">
+                                            <i class="mdi mdi-trash-can-outline"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal fade" id="remove-location" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title mb-3" id="exampleModalLabel">آیا مطمئنید که
+                                                    این آگهی دیگر در سایت نمایش داده نشود؟</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="remodal-general-alert-button remodal-general-alert-button--cancel"
+                                                    data-dismiss="modal">خیر</button>
+                                                <a href="{% url 'Users:UserAccountDelete' account.code %}">
+                                                <button type="button" 
+                                                    class="remodal-general-alert-button remodal-general-alert-button--approve">بله</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
