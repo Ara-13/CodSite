@@ -24,6 +24,9 @@ class AccountAdmin(admin.ModelAdmin):
 @admin.register(models.Order)
 class CodOrderAdmin(admin.ModelAdmin):
     pass
+@admin.register(models.OrderAccount)
+class CodOrderAdmin(admin.ModelAdmin):
+    pass
 @admin.register(models.Cart)
 class CodCartAdmin(admin.ModelAdmin):
     pass

@@ -23,8 +23,15 @@
     <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
     <!-- Main CSS File -->
+    {% if request.session.mode == 'dark'  %}
+    <link rel="stylesheet" href="{% static 'assets/css/main-dark.css' %}">
+    {% elif request.session.mode == 'light'  %}
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" id="colorswitch">
+    {% endif %}
+
+    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}">
 </head>
         
     <body>

@@ -8,7 +8,7 @@
     <script src="{% static 'prettify.min.js' %}"></script>
     <script src="{% static 'topbar.min.js' %}"></script>
     <script>
-      var loadTime = window.performance.timing.domContentLoadedEventEnd- window.performance.timing.navigationStart
+      var loadTime = window.performance.timing.domContentLoadedEventEnd;
       $(function() {
           prettyPrint()
           function resetToDefaults() {

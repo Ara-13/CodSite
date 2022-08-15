@@ -38,6 +38,20 @@
                                 </td>
                             </tr>
                             {% endfor %}
+                            {% for order in user_order_accounts %}
+                            <tr>
+                                <td>{{order.order_number}}</td>
+                                <td>{{order.factor_number}}</td>
+                                <td>14{{order.date|to_jalali:'%y/%m/%d'}}</td>
+                                <td>{{order.final_price}} تومان</td>
+                                <td>{{order.get_status_display}}</td>
+                                <td class="details-link">
+                                    <a href="{% url 'Users:UserOrderAccountDetail' order.order_number %}">
+                                        <i class="mdi mdi-chevron-left"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

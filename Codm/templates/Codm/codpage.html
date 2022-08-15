@@ -65,16 +65,16 @@
             <div id="main-filter">
                 {% if main_filter == 'w4p' %}
                 <h1>اکانت های آگهی شده و در لیست انتظار</h1>
-                <a href="{% url 'Codm:codm' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
-                <a href="{% url 'Codm:codm' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
                 {% elif main_filter == 'sold' %}
-                <a href="{% url 'Codm:codm' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
-                <a href="{% url 'Codm:codm' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=available"><h3>اکانت های تایید شده و قابل خرید</h3></a>
                 <h1>اکانت های فروخته شده</h1>
                 {% else %}
-                <a href="{% url 'Codm:codm' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=w4p"><h3>اکانت های آگهی شده و در لیست انتظار</h3></a>
                 <h1>اکانت های تایید شده و قابل خرید</h1>
-                <a href="{% url 'Codm:codm' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
+                <a href="{% url 'Codm:Game' %}?q=sold"><h3>اکانت های فروخته شده</h3></a>
                 {% endif %}
             </div>
             {% endif %}

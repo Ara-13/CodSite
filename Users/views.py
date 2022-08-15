@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from Users.models import User
 from Products.models import EP, Product
-from Codm.models import Cart, Order, Account, Banner
+from Codm.models import Cart, Order, Account, Banner, OrderAccount
 from .forms import UserCreationForm, UserEditionForm
 from random import randint
 from datetime import date
@@ -12,6 +12,8 @@ from django.contrib import messages
 from time import sleep
 
 def LoginFunc(request):
+    if request.user.is_authenticated:
+        return redirect('Users:UserPanel')
     Page = 'login'
     message = None
     if request.method == "POST":
@@ -26,8 +28,8 @@ def LoginFunc(request):
 
             if USER:
                 login(request, USER)
-                messages.success(request, '.شما وارد شدید')
-                return redirect('Users:UserPanel')
+                messages.success(request, 'شما وارد شدید.')
+                return redirect(request.META.get('HTTP_REFERER', '/'))
             else:
                 messages.error(request, 'ایمیل و رمز وارد شده اشتباه است.')
     final_message = message if message != None else ''
@@ -78,7 +80,7 @@ def user_cart(request):
             cart.final_price -= naccount.price
             cart.account.remove(naccount)
             cart.save()
-            messages.error(request, 'اکانت به شماره آگهی {} قبل از نهایی شدن خرید شما فروخته یا پاک شد و بنابراین از سبد خرید شماحذف شد'.format(naccount.code))
+            messages.error(request, 'اکانت به شماره آگهی {} قبل از نهایی شدن خرید شما فروخته یا پاک شد و بنابراین از سبد خرید شما حذف شد'.format(naccount.code))
     for nproduct in cart_product:
         if nproduct.status != 'AV':
             cart.final_price -= nproduct.price
@@ -90,6 +92,17 @@ def user_cart(request):
         cart_product = request.user.cart.product.all()
         cart_n = cart_account.count() + cart_product.count()
         cart.save()
+
+        cart_object_sum = 0
+        for account in cart_account:
+            cart_object_sum += account.price
+        for product in cart_product:
+            cart_object_sum += product.price
+        if cart.final_price != cart_object_sum:
+            if cart_object_sum != 0:
+                cart.final_price = cart_object_sum
+                cart.save()
+
         context = {
             'cart' : cart,
             'cart_account' : cart_account,
@@ -99,7 +112,16 @@ def user_cart(request):
         }
         return render(request, 'cart.html', context)
     else:
-        return render(request, 'cart-empty.html')
+        banners = Banner.objects.filter(show__exact=True).order_by('-code')
+        small_banners = banners.filter(Type__exact='smallbanner')[:4]
+        random_products = Product.objects.filter(status__exact='AV').order_by('?')[:10]
+        random_accounts = Account.objects.filter(status__exact='available').order_by('?')[:10]
+        context = {
+            'random_products' : random_products,
+            'random_accounts' : random_accounts,
+            'small_banners' : small_banners
+        }
+        return render(request, 'cart-empty.html', context)
 
 @login_required(login_url='Users:login')
 def cart_continue(request):
@@ -156,11 +178,17 @@ def cart_success(request):
     if cart.status != 'f':
         return redirect('Users:cart')
     else:
-        order = Order(user=request.user, order_number=randint(10000, 20000),
-        factor_number=randint(20000, 30000), date=date.today())
-        order1 = Order(user=request.user, order_number=randint(10000, 20000),
-        factor_number=randint(20000, 30000), date=date.today())
-        order.save()
+        order = None
+        order1 = None
+        if cart.product.exists():
+            order = Order(user=request.user, order_number=randint(10000, 20000),
+            factor_number=randint(20000, 30000), date=date.today())
+            order.save()
+        if cart.account.exists():
+            order1 = OrderAccount(user=request.user, order_number=randint(10000, 20000),
+            factor_number=randint(20000, 30000), date=date.today())
+            order1.save()
+
         cart_account = request.user.cart.account.all()
         cart_product = request.user.cart.product.all()
 
@@ -173,36 +201,74 @@ def cart_success(request):
             account.save()
             request.user.buys += 1
             request.user.save()
-        order1.save()
+            order1.final_price += account.price
+        if order1:
+            order1.status = 'w4a'
+            order1.save()
         #code ersal payam inja
         for product in cart_product:
             order.product.add(product)
             order.save()
             request.user.buys += 1
             request.user.save()
+            order.final_price += product.price
+        order.save() if order else None
         #code ersal payam inja
-
-        order1.save()
-        order.save()
-
+        
+        final_price = cart.final_price
         cart.delete()
         new_cart = Cart(user=request.user, status='fn')
         new_cart.save()
-        return redirect('Users:cart-finished', order.order_number)
+        if order and order1:
+            return redirect('Users:cart-finished', order.order_number, order1.order_number,)
+        elif order:
+            none = 111
+            return redirect('Users:cart-finished', order.order_number, none,)
+        else:
+            none = 222
+            return redirect('Users:cart-finished', order1.order_number, none,)
+
 
 @login_required(login_url='Users:login')
-def cart_finished(request, order):
-    user_order = Order.objects.get(order_number=order)
-    if user_order.status == 'w4c':
-        if user_order.product.exists():
-            product = True
-        else:
-            product = False
-        context = {
-            'order' : user_order,
-            'product' : product,
-        }
-        return render(request, 'shopping-complete.html', context)
+def cart_finished(request, order, order1):
+    random_products = Product.objects.filter(status__exact='AV').order_by('?')[:10]
+    if order1 == '111':
+        if order != '111':
+            user_order = Order.objects.get(order_number=order)
+            if user_order.status == 'w4c':
+                product = True
+                context = {
+                    'order' : user_order,
+                    'product' : product,
+                    'random_products' : random_products,
+                }
+                return render(request, 'shopping-complete.html', context)
+    elif order1 == '222':
+        if order != '111':
+            user_order = OrderAccount.objects.get(order_number=order)
+            if user_order.status == 'w4a':
+                product = False
+                context = {
+                    'order' : user_order,
+                    'product' : product,
+                    'random_products' : random_products,
+                }
+                return render(request, 'shopping-complete.html', context)
+    else:
+        if order != '111':
+            user_order = Order.objects.get(order_number=order)
+            user_order1 = OrderAccount.objects.get(order_number=order1)
+            if user_order.status == 'w4c':
+                product = True
+                account = True
+                context = {
+                    'order' : user_order,
+                    'order1' : user_order1,
+                    'product' : product,
+                    'account' : account,
+                    'random_products' : random_products,
+                }
+                return render(request, 'shopping-complete.html', context)
 @login_required(login_url='Users:login')
 def addtocart(request, co):
     account = Account.objects.get(pk=co)
@@ -220,8 +286,8 @@ def removefromcart(request, co):
     account.save()
     cart = request.user.cart
     cart.save()
-    cart.final_price -= account.price
     cart.account.remove(account)
+    cart.final_price -= account.price
     cart.save()
     messages.success(request, 'اکانت از سبد خرید شما حذف شد!')
     return redirect('Users:cart')
@@ -304,6 +370,7 @@ def user_accounts(request):
 def user_orders(request):
     user = User.objects.get(username=request.user)
     user_orders = Order.objects.filter(user__exact=user)
+    user_order_accounts = OrderAccount.objects.filter(user__exact=user)
 
     user_phone = list(str(user.phone))[3::]
     user_phone = ''.join(user_phone)
@@ -311,6 +378,7 @@ def user_orders(request):
     context = {
         'user_phone' : user_phone,
         'user_orders' : user_orders,
+        'user_order_accounts' : user_order_accounts,
         'page' : 'orders',
         #'sujestion' : accounts,
     }
@@ -326,17 +394,45 @@ def UserOrderDetail(request, co):
         raise Http404
     else:
         products = order.product.all()
+
+    user = User.objects.get(username=request.user)
+    user_phone = list(str(user.phone))[3::]
+    user_phone = ''.join(user_phone)
+
+    context = {
+        'order': order,
+        'products' : products,
+        'page': 'orders',
+        'user_phone': user_phone,
+        'page' : 'products',
+    }
+    context['suggestion'] = Account.objects.filter(status__exact='available').order_by('?')[:3]
+    
+    return render(request, 'Panel/myorder_detail.html', context)
+
+@login_required(login_url='Users:login')
+def UserOrderAccountDetail(request, co):
+    try:
+        order = OrderAccount.objects.get(order_number=co)
+    except:
+        raise Http404
+    else:
         accounts = order.account_set.all()
-        
-        context = {
-            'order': order,
-            'products' : products,
-            'accounts' : accounts,
-            'page': 'orders',
-        }
-        context['suggestion'] = Account.objects.filter(status__exact='available').order_by('?')[:3]
-        
-        return render(request, 'Panel/myorder_detail.html', context)
+
+    user = User.objects.get(username=request.user)
+    user_phone = list(str(user.phone))[3::]
+    user_phone = ''.join(user_phone)
+    
+    context = {
+        'order': order,
+        'accounts' : accounts,
+        'page': 'orders',
+        'user_phone': user_phone,
+        'page' : 'accounts',
+    }
+    context['suggestion'] = Account.objects.filter(status__exact='available').order_by('?')[:3]
+    
+    return render(request, 'Panel/myorder_detail.html', context)
 
 
 @login_required(login_url='Users:login')
@@ -348,3 +444,7 @@ def user_delete_account(request, co):
         return redirect('Users:UserAccounts')
     else:
         raise Http404
+
+def site_mode(request, mode):
+    request.session['mode'] = mode
+    return redirect(request.META.get('HTTP_REFERER', '/'))

@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+
+from Products.models import Product
 from . import models
 from django.contrib import messages
 from Codm.models import Order, Cart, Video
@@ -27,14 +29,9 @@ def home(request):
     middle_banner= banners.filter(Type__exact='middlebanner')[:2]
     small_banner = banners.filter(Type__exact='smallbanner')[:4]
 
-    accounts = models.Account.objects.filter(status__exact='available').order_by('-code')[:10]
-    if request.user.is_authenticated:
-        cart = request.user.cart
-        if cart.account.exists() or cart.product.exists():
-            cart_account = request.user.cart.account.all()
-            cart_product = request.user.cart.product.all()
-            cart_n = cart_account.count() + cart_product.count()
-            cart.save()
+    accounts = models.Account.objects.filter(status__exact='available', group__exact='codm').order_by('-code')[:10]
+    random_products = Product.objects.filter(status__exact='AV').order_by('?')[:10]
+
     context = {
         'HomePage' : True,
         'sliders' : sliders[1:sliders_count+1],
@@ -49,6 +46,7 @@ def home(request):
         'sug_accounts' : accounts,
         'middle_banners' : middle_banner,
         'small_banners' : small_banner,
+        'random_products': random_products,
     }
     return render(request, 'Codm/index.html', context)
 
@@ -72,24 +70,32 @@ def codm(request):
         'main_filter' : page,
     }
     return render(request, 'Codm/products.html', context)
-def account(request, co):
-    account = models.Account.objects.get(pk=co)
-    if account.group == 'codm':
+def account(request, gr, co):
+    account = models.Account.objects.filter(group__exact=gr).get(code=co)
+    seller = User.objects.get(username=account.seller.username)
+    if gr == 'codm':
         codaccount = models.CodAccount.objects.get(account=account)
     links = account.link_set.all()
     images = account.image_set.all()
-
+    fields = codaccount._meta.fields
+    field_values = {}
+    for field in fields:
+        value = field.value_from_object(codaccount)
+        field_values[field] = value
     context = {
         'account' : account,
         'codaccount' : codaccount,
         'links' : links,
         'l_count': links.count(),
         'images' : images,
+        'Fields' : fields,
+        'Values' : field_values,
+        'seller' : seller,
     }
     return render(request, 'Codm/single-product.html', context)
 
 def ListView(request, gr, page):
-    group = models.Account.objects.filter(group__exact=gr, status__exact='available')
+    group = models.Account.objects.filter(group__exact=gr, status__exact='available').order_by('-code')
     page = int(page)
     n = group.count()
     mini = 1

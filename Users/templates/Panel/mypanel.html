@@ -22,8 +22,14 @@
         <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
         <!-- Main CSS File -->
+        {% if request.session.mode == 'dark'  %}
+        <link rel="stylesheet" href="{% static 'assets/css/main-dark.css' %}">
+        {% elif request.session.mode == 'light'  %}
         <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-        <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+        {% else %}
+        <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" id="colorswitch">
+        {% endif %}
+        <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}">
     </head>
     <body>
         <div class="wrapper">
@@ -141,7 +147,7 @@
                             <div class="col-12">
                                 <div class="section-title text-sm-title title-wide no-after-title-wide">
                                     <h2>محصولات پیشنهادی برای شما</h2>
-                                    <a href="{% url 'Codm:codm' 'codm' '1' %}">مشاهده همه</a>
+                                    <a href="{% url 'Codm:Game' 'codm' '1' %}">مشاهده همه</a>
                                 </div>
                             </div>
     
@@ -158,7 +164,7 @@
                                                     <span></span>
                                                 </div>
                                             </div>
-                                            <a class="product-thumb" href="{% url 'Codm:account' account.code %}">
+                                            <a class="product-thumb" href="{% url 'Codm:account' account.group account.code %}">
                                                 {% if account.picture %}
                                                 <img src="{{ account.picture.url }}" alt="Product Thumbnail"
                                                 style="width:300px; height: 150px;object-fit: cover; object-position: center; border-radius: 5px;">
@@ -169,7 +175,7 @@
                                             </a>
                                             <div class="product-card-body">
                                                 <h5 class="product-title">
-                                                    <a href="{% url 'Codm:account' account.code %}">کد آگهی: {{account.code}}</a>
+                                                    <a href="{% url 'Codm:account' account.group account.code %}">کد آگهی: {{account.code}}</a>
                                                 </h5>
                                                 <a class="product-meta" href="shop-categories.html">اکانت کالاف دیوتی موبایل</a>
                                                 <span class="product-price">{{account.price}} تومان</span>

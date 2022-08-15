@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 
 group_list = [
-    'CP', 'COC'
+    'CP', 'COC', 'CR'
 ]
 def ProductView(request, pname):
     if pname in group_list:

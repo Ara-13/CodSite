@@ -23,8 +23,18 @@
     <link rel="stylesheet" href="{% static 'assets/css/vendor/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/vendor/nouislider.min.css' %}">
     <!-- Main CSS File -->
+    {% if request.user.is_authenticated %}
+    {% if request.user.theme == 'dark'  %}
+    <link rel="stylesheet" href="{% static 'assets/css/main-dark.css' %}">
+    {% elif request.user.theme == 'light' %}
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}" id="colorswitch">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" id="colorswitch">
+    {% endif %}
+    {% else %}
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" id="colorswitch">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'assets/css/colors/cyan-color.css' %}">
 </head>
 
 <body>
@@ -36,7 +46,18 @@
                 <div class="row">
                     <div class="col-xl-4 col-lg-5 col-md-7 col-12 mx-auto">
                         <div class="logo-area text-center mb-3">
-                            <a href="#"><img src="./assets/img/logo.png" class="img-fluid" alt="logo"></a>
+                            <a href="{% url 'Codm:home' %}">
+                                {% if request.user.is_authenticated %}
+                                {% if request.user.theme == 'dark'  %}
+                                <img src="{% static 'assets/img/logo-dark.jpg' %}" style="height: 30px;" alt="">
+                                {% elif request.user.theme == 'light' %}
+                                <img src="{% static 'assets/img/logo.jpg' %}" style="height: 30px;" alt="">
+                                {% else %}
+                                <img src="{% static 'assets/img/logo.jpg' %}" style="height: 30px;" alt="" id="logo">
+                                {% endif %}
+                                {% else %}
+                                <img src="{% static 'assets/img/logo.jpg' %}" style="height: 30px;" alt="" id="logo">
+                                {% endif %}</a>
                         </div>
                         <div class="auth-wrapper form-ui border pt-4">
                             <div class="section-title title-wide mb-1 no-after-title-wide">
@@ -88,27 +109,6 @@
             </div>
         </main>
         <!-- End main-content -->
-        <!-- Start mini-footer -->
-        <footer class="mini-footer dt-sl">
-            <div class="container main-container">
-                <div class="row">
-                    <div class="col-12">
-                    </div>
-                    <div class="col-12 mt-2 mb-3">
-                        <div class="footer-light-text">
-                            استفاده از مطالب فروشگاه اینترنتی گیم استور فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع
-                            است. کلیه حقوق این سایت متعلق به (فروشگاه آنلاین گیم استور) می‌باشد.
-                        </div>
-                    </div>
-                    <div class="col-12 text-center">
-                        <div class="copy-right-mini-footer">
-                            Copyright © 2019 GameStore
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- End mini-footer -->
     </div>
     <!-- Core JS Files -->
     <script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>

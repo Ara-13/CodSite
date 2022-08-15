@@ -677,8 +677,8 @@ h1, a, span, p
 .product-img {
   position: absolute;
   z-index: 2;
-  width: 500px;
-  left: 15%;
+  width: 400px;
+  left: 20%;
   /*left: 25%;*/
   transform: translateX(-45%);
   max-height: 500px;
@@ -711,7 +711,7 @@ h1, a, span, p
 @media screen and (max-width: 576px) {
   .product-img {
     max-width: 250px;
-    height: 250px;
+    height: 240px;
   }
 }
 .product-img__item {

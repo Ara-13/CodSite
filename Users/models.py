@@ -45,6 +45,15 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True, null=True)
     sells = models.IntegerField(default=0, null=True)
     buys = models.IntegerField(default=0, null=True)
+    verified = models.BooleanField(default=False)
+
+    TH = (
+        ('dark', 'تم تاریک'),
+        ('light', 'تم روشن'),
+        ('byhour', 'بر طبق ساعت')
+    )
+
+    theme = models.CharField(max_length=10, choices=TH, default='byhour')
     #importants:
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user

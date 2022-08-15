@@ -113,16 +113,16 @@
                         <div class="product-params dt-sl">
                             <ul data-title="ویژگی‌های اکانت">
                                 <li>
-                                    <span>احراز هویت فروشنده:  </span>
+                                    <span>واسطه گری گیم استور:  </span>
                                     <span>✅</span>
                                 </li>
                                 <li>
                                     <span>تصویر: </span>
-                                    <span>{% if images %}دارد ✔{% else %} ندارد ❌{% endif %}</span>
+                                    <span>{% if images %}دارد ✅{% else %} ندارد ❌{% endif %}</span>
                                 </li>
                                 <li>
                                     <span>ویدیو: </span>
-                                    <span>{% if account.video %}دارد ✔{% else %} ندارد ❌{% endif %}</span>
+                                    <span>{% if account.video %}دارد ✅{% else %} ندارد ❌{% endif %}</span>
                                 </li>
                         </div>
                         <div class="section-title text-sm-title title-wide no-after-title-wide mb-0 dt-sl">
@@ -148,14 +148,13 @@
             </div>
             <div class="mb-add-to-cart-btn-wrapper">
                 {% if request.user != account.seller %}
-                        <div class="dt-sl mt-4">
-                            <a href="{% url 'Users:addtocart' account.code %}" class="btn-primary-cm btn-with-icon">
-                                <img src="{% static 'assets/img/theme/shopping-cart.png' %}" alt="">                                       
-                                افزودن به سبد خرید                                    
-                            </a>
-                        </div>
+                <a href="{% url 'Users:addtocart' account.code %}">
+                    <button 
+                    class="btn btn-sm btn-primary btn-submit-form" style="position: relative;
+                    width: 100%; text-align: center;">افزودن به سبد خرید</button>
+                </a>
                 {% else %}
-                <h4>شما نمی توانید اکانت خود را خریداری کنید!</h4>
+                <h4 style="text-align:center;">شما نمی توانید اکانت خود را خریداری کنید!</h4>
                 {% endif %}
             </div>
         </div>
@@ -175,8 +174,59 @@
                         <div class="product-title dt-sl mb-3">
                             <h1> کد آگهی: {{account.code}}
                             </h1>
-                            <h3>فروشنده: {{account.seller}}@</h3>
                         </div>
+                        <section>
+                            <h3 class="params-title">مشخصات فروشنده</h3>
+                            <ul class="params-list">
+                                <li>
+                                    <div class="params-list-key">
+                                        <span class="d-block">نام کاربری</span>
+                                    </div>
+                                    <div class="params-list-value">
+                                        <span class="d-block">
+                                            {{seller.username}}@
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                <li>
+                                    <div class="params-list-key">
+                                        <span class="d-block">تعداد فروش ها در سایت</span>
+                                    </div>
+                                    <div class="params-list-value">
+                                        <span class="d-block">
+                                            {{seller.sells}}
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="params-list-key">
+                                        <span class="d-block">تعداد خرید ها از سایت</span>
+                                    </div>
+                                    <div class="params-list-value">
+                                        <span class="d-block">
+                                            {{seller.buys}}
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="params-list-key">
+                                        <span class="d-block">احراز هویت</span>
+                                    </div>
+                                    <div class="params-list-value">
+                                        <span class="d-block">
+                                            {% if seller.verified %}
+                                            شده است
+                                            {% else %}
+                                            نشده است
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </li>
+                                <p style="font-size: 15px; color: red; font-weight: bolder;">فروشندگانی که احراز هویت شده اند، مدارک معتبر به سایت ارائه داده اند، بنابراین خرید از آنها ایمن تر و سریع تر صورت می گیرد.</p>
+                                <li>
+                            </ul>
+                        </section>
                         <section>
                             <h3 class="params-title">مشخصات کلی</h3>
                             <ul class="params-list">
@@ -202,11 +252,13 @@
                                 </li>
                                 <li>
                                     <div class="params-list-key">
-                                        <span class="d-block">تعداد سیو ها</span>
+                                        <span class="d-block">سیو ها</span>
                                     </div>
                                     <div class="params-list-value">
                                         <span class="d-block">
-                                            {{l_count}}
+                                            {% for link in links %}
+                                            {{link.get_Type_display}} - 
+                                            {% endfor %}
                                         </span>
                                     </div>
                                 </li>
@@ -215,91 +267,27 @@
                         <section>
                             <h3 class="params-title">اطلاعات بازی</h3>
                             <ul class="params-list">
+                                {% for field in Fields %}
+                                {% if field.verbose_name != 'ID' and field.verbose_name != 'account' %}
                                 <li>
                                     <div class="params-list-key">
-                                        <span class="d-block">لول</span>
+                                        
+                                        <span class="d-block">{{field.verbose_name}}</span>
                                     </div>
                                     <div class="params-list-value">
                                         <span class="d-block">
-                                            {{codaccount.level}}
+                                            {% for k, v in Values.items %}
+                                            {% if k == field %}
+                                            {{v}}
+                                            {% endif %}
+                                            {% endfor %}
                                         </span>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="params-list-key">
-                                        <span class="d-block">ریجن</span>
-                                    </div>
-                                    <div class="params-list-value">
-                                        <span class="d-block">
-                                            {{codaccount.region}}
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="params-list-key">
-                                        <span class="d-block">تعداد سیپی</span>
-                                    </div>
-                                    <div class="params-list-value">
-                                        <span class="d-block">
-                                            {{codaccount.cp}}
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="params-list-key">
-                                        <span class="d-block">تعداد سی</span>
-                                    </div>
-                                    <div class="params-list-value">
-                                        <span class="d-block">
-                                            {{codaccount.c}}
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="params-list-key">
-                                        <span class="d-block">رنک مولتی</span>
-                                    </div>
-                                    <div class="params-list-value">
-                                        <span class="d-block">
-                                            {{codaccount.multi_ranked}}
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="params-list-key">
-                                        <span class="d-block">رنک بتل</span>
-                                    </div>
-                                    <div class="params-list-value">
-                                        <span class="d-block">
-                                            {{codaccount.battle_ranked}}
-                                        </span>
-                                    </div>
-                                </li>
+                                {% endif %}
+                                {% endfor %}
                             </ul>
                         </section>
-                        <h3 class="params-title">سایر مشخصات</h3>
-                        <ul class="params-list">
-                            <li>
-                                <div class="params-list-key">
-                                    <span class="d-block">بتل پس ها</span>
-                                </div>
-                                <div class="params-list-value">
-                                    <span class="d-block">
-                                        {{codaccount.battle_pass}}
-                                    </span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="params-list-key">
-                                    <span class="d-block">توضیحات فروشنده</span>
-                                </div>
-                                <div class="params-list-value">
-                                    <span class="d-block">
-                                        {{codaccount.description}}
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
                     </section>
                     </div>
                 </div>

@@ -19,7 +19,40 @@ class Order(models.Model):
         ('cl', 'لغو شده'),
         ('w4ti', 'در انتظار اصلاح اطلاعات'),
     )
-    final_price = models.IntegerField(null=True)
+    final_price = models.IntegerField(default=0)
+
+    status = models.CharField(max_length=5, choices=Status, default='w4c')
+    class Meta:
+        ordering = ['-date']
+    
+    def __str__(self):
+        return 'user:{}; order:{}; factor{}'.format(self.user, self.order_number, self.factor_number)
+
+class OrderAccount(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    order_number = models.IntegerField(primary_key=True)
+    factor_number = models.IntegerField()
+    date = models.DateField(auto_now=True)
+
+    Status = (
+        ('w4c', 'ثبت سفارش'),
+        ('w4a', 'در انتظار پاسخگویی فروشنده'),
+        ('w4r', 'در انتظار ارسال اطلاعات توسط فروشنده'),
+        ('rinfo', 'ویرایش و آماده سازی اطلاعات توسط سایت'),
+        ('g2b', 'تایید اطلاعات توسط خریدار'),
+        ('cl', 'لغو شده'),
+        ('dn', 'تکمیل سفارش'),
+    )   
+
+    w4c = models.BooleanField(default=True)
+    w4a = models.BooleanField(default=True)
+    w4r = models.BooleanField(default=False)
+    rinfo = models.BooleanField(default=False)
+    g2b = models.BooleanField(default=False)
+    dn = models.BooleanField(default=False)
+    cl = models.BooleanField(default=False)
+
+    final_price = models.IntegerField(default=0)
 
     status = models.CharField(max_length=5, choices=Status, default='w4c')
     class Meta:
@@ -30,7 +63,7 @@ class Order(models.Model):
 
 class Account(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(OrderAccount, on_delete=models.SET_NULL, null=True, blank=True)
 
     code = models.IntegerField(primary_key=True)
 
@@ -60,23 +93,23 @@ class Account(models.Model):
 
 class CodAccount(models.Model):
     account = models.OneToOneField(Account, on_delete=models.CASCADE)
-    level = models.IntegerField(default=1)
+    level = models.IntegerField(verbose_name='لول', default=1)
     Region = (
-        ('220', 'Iran'),
-        ('360', 'India'),
-        ('560', 'Europe'),
+        ('220', 'هند'),
+        ('360', 'ایران'),
+        ('560', 'اروپا'),
     )
 
-    region = models.CharField(max_length=3, choices=Region, default='IR')
+    region = models.CharField(verbose_name='ریجن', max_length=3, choices=Region, default='IR')
 
-    cp = models.IntegerField(default=0, blank=True, null=True)
-    c = models.IntegerField(default=0, blank=True, null=True)
+    cp = models.IntegerField(verbose_name='تعداد CP', default=0, blank=True, null=True)
+    c = models.IntegerField(verbose_name='تعداد C', default=0, blank=True, null=True)
 
-    multi_ranked = models.CharField(max_length=200, blank=True, null=True)
-    battle_ranked = models.CharField(max_length=200, blank=True, null=True)
+    multi_ranked = models.CharField(verbose_name='رنک مولتی', max_length=200, blank=True, null=True)
+    battle_ranked = models.CharField(verbose_name='رنک بتل', max_length=200, blank=True, null=True)
 
-    battle_pass = models.TextField(max_length=900, blank=True, null=True)
-    description = models.TextField(max_length=900, blank=True, null=True)
+    battle_pass = models.TextField(verbose_name='بتل پس ها', max_length=900, blank=True, null=True)
+    description = models.TextField(verbose_name='توضیحات فروشنده', max_length=900, blank=True, null=True)
 
     def __str__(self):
         return 'CodAccount:{}'.format(self.account.code)

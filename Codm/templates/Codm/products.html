@@ -284,19 +284,27 @@
                                                 <div class="product-head">
                                                     <img style="height: 20px; width: 20px; border: solid 0.5px #33ccff; border-radius: 50%;" src="https://img.icons8.com/fluency/48/000000/test-account.png"/>{{account.seller}}@
                                                 </div>
-                                                <a class="product-thumb" href="{% url 'Codm:account' account.code %}">
+                                                <a class="" href="{% url 'Codm:account' account.group account.code %}">
                                                     <img {% if account.picture %} src="{{account.picture.url}}" {% else %}
                                                     src="{% static 'assets/img/banner/codm1.jpg' %}"{% endif %}
-                                                    style="height: 200px; width: 400px; object-fit: cover; border-radius: 5px;
-                                                    object-position: center;" alt="Product Thumbnail">
+                                                    style="height: 200px; width: 80%; object-fit: cover; border-radius: 5px;
+                                                    object-position: center; position:relative; margin: 0 10% 10px;" alt="Product Thumbnail">
                                                 </a>
-                                                <div class="product-card-body">
+                                                <div class="product-card-body" style="text-align:center; width: 100%;">
                                                     <h5 class="product-title">
-                                                        <a href="{% url 'Codm:account' account.code %}">کد آگهی: {{account.code}}</a>
+                                                        <a href="{% url 'Codm:account' account.group account.code %}">کد آگهی: {{account.code}}</a>
+                                                        {% if account.group == 'codm' %}
+                                                        <p style="margin-top: 5px;" id="p-slider">ریجن: {{account.codaccount.get_region_display}}</p>
+                                                        {% endif %}
                                                     </h5>
                                                     <a class="product-meta" href="">دسته: {{account.get_group_display}}</a>
                                                     <span class="product-price">{{account.price}} تومان</span>
                                                 </div>
+                                                <a href="{% url 'Users:addtocart' account.code %}">
+                                                    <button 
+                                                    class="btn btn-sm btn-primary btn-submit-form" style="position: relative;
+                                                    width: 80%; text-align: center; margin: 10px 10% 0;">افزودن به سبد خرید</button>
+                                                </a>
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -307,12 +315,12 @@
                                                 <!--<a href="#" class="prev"><i
                                                         class="mdi mdi-chevron-double-right"></i></a>-->
                                                 {% for pg1 in min_range %}
-                                                <a href="{% url 'Codm:codm' 'codm' pg1 %}">{{pg1}}</a>
+                                                <a href="{% url 'Codm:Game' 'codm' pg1 %}">{{pg1}}</a>
                                                 {% endfor %}
                                                 <a href="#" class="active-page">{{page}}</a>
                                                 {% for pg2 in max_range %}
                                                 {% if pg2 != page %}
-                                                <a href="{% url 'Codm:codm' 'codm' pg2 %}">{{pg2}}</a>
+                                                <a href="{% url 'Codm:Game' 'codm' pg2 %}">{{pg2}}</a>
                                                 {% endif %}
                                                 {% endfor %}
                                                 <!--<a href="#" class="next"><i class="mdi mdi-chevron-double-left"></i></a>-->

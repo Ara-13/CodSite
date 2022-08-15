@@ -14,13 +14,19 @@
                 <div class="col-lg-2 col-md-3 col-6">
                     <div class="logo-area">
                         <a href="{% url 'Codm:home' %}">
-                            <img src="{% static 'assets/img/logo.jpg' %}" style="height: 35px" alt="">
+                            {% if request.session.mode == 'dark'  %}
+                            <img src="{% static 'assets/img/logo-dark.jpg' %}" style="height: 30px;" alt="">
+                            {% elif request.session.mode == 'light'  %}
+                            <img src="{% static 'assets/img/logo.jpg' %}" style="height: 30px;" alt="">
+                            {% else %}
+                            <img src="{% static 'assets/img/logo.jpg' %}" style="height: 30px;" alt="" id="logo">
+                            {% endif %}
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5 hidden-sm">
                     <div class="search-area dt-sl">
-                        <form method="get" action="" class="search" style="height: 40px; margin-right: 20px;">
+                        <form method="get" action="" class="search" style="height: 40px; margin-right: 100px;">
                             <input type="text"
                                 placeholder="نام کالا، اکانت و یا دسته مورد نظر خود را جستجو کنید…"
                                 name="Q">
@@ -50,7 +56,7 @@
                 <div class="col-md-4 col-6 topbar-left">
                     <ul class="nav float-left">
                         {% if user.is_authenticated %}
-                        <li class="nav-item account dropdown">
+                        <li class="nav-item account dropdown" style="transform:translateY(-10%)">
                             <a class="nav-link" href="{% url 'Users:UserPanel' %}" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 {% if HomePage %}<span class="label-dropdown">{{request.user.name}}</span>{% else %}
@@ -74,9 +80,9 @@
                             </div>
                         </li>
                         {% else %}
-                        <li class="nav-item account dropdown">
+                        <li class="nav-item account dropdown" style="transform:translateY(-10%)">
                             <a class="nav-link" href="{% url 'Users:login' %}">
-                                <span class="label-dropdown">ورود / ثبت نام</span>
+                                <span class="label-dropdown">ورود | ثبت‌نام</span>
                                 <i class="mdi mdi-account-circle-outline"></i>
                             </a>
                         {% endif %}
@@ -338,6 +344,36 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- dropdown-menu -->
+                    <li class="list-item list-item-has-children menu-col-1">
+                        <a class="nav-link" href="#">تغییر تم سایت</a>
+                        <ul class="sub-menu nav">
+                            <li class="list-item">
+                                <a class="nav-link" href="{% url 'Users:ChangeMode' 'dark' %}">تم تاریک 
+                                    {% if request.session.mode == 'dark' %}
+                                    <strong>(فعال)</strong>
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav-link" href="{% url 'Users:ChangeMode' 'light' %}">تم روشن 
+                                    {% if request.session.mode == 'light' %}
+                                    <strong>(فعال)</strong>
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav-link" href="#">تم براساس ساعت</a>
+                            </li>
+                            <!--<li class="list-item">
+                                <p style="color: rgb(210, 0, 0); padding: 10px; font-weight: bold;">تم سایت برای کاربران به صورت پیشفرض براساس ساعت می باشد. برای تغییر تم باید ابتدا وارد سایت شوید!</p>
+                                <a class="nav-link" href="{% url 'Users:login' %}">ورود |  ثبت نام</a>
+                            </li>-->
+                        </ul>
+                    </li>
+                    <li class="list-item">
+                        <a class="nav-link" href="#">ورزش و سفر</a>
+                    </li>
                     <!-- mega menu 3 column -->
                     <li class="list-item list-item-has-children mega-menu mega-menu-col-3">
                         <a class="nav-link" href="#">بهداشت و سلامت</a>
@@ -403,7 +439,7 @@
                             </li>
                             <li class="list-item">
                                 <a href="#">
-                                    <img src="./assets/img/theme/mega-menu.jpg" alt="">
+                                    <img src="{% static 'assets/img/theme/mega-menu.jpg' %}" alt="">
                                 </a>
                             </li>
                         </ul>
@@ -511,35 +547,6 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <!-- dropdown-menu -->
-                    <li class="list-item list-item-has-children menu-col-1">
-                        <a class="nav-link" href="#">خانه و آشپزخانه</a>
-                        <ul class="sub-menu nav">
-                            <li class="list-item">
-                                <a class="nav-link" href="#">زیر منو یک</a>
-                            </li>
-                            <li class="list-item">
-                                <a class="nav-link" href="#">زیر منو دو</a>
-                            </li>
-                            <li class="list-item list-item-has-children">
-                                <a class="nav-link" href="#">زیر منو سه</a>
-                                <ul class="sub-menu nav">
-                                    <li class="list-item">
-                                        <a class="nav-link" href="#">زیر منو سه - یک</a>
-                                    </li>
-                                    <li class="list-item">
-                                        <a class="nav-link" href="#">زیر منو سه - دو</a>
-                                    </li>
-                                    <li class="list-item">
-                                        <a class="nav-link" href="#">زیر منو سه - سه</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="list-item">
-                        <a class="nav-link" href="#">ورزش و سفر</a>
                     </li>
                 </ul>
                 

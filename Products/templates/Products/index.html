@@ -21,7 +21,7 @@
     <div class="product-img">
     {% for product in products %}
       <div class="product-img__item" id="img{{product.code}}">
-        <img src="{{ product.image.url }}" alt="" class="product-img__img">
+        <img src="{{ product.image.url }}" alt="" class="product-img__img" style="border-radius: 10px;" >
       </div>
     {% endfor %}
     </div>
@@ -43,7 +43,7 @@
         {% for product in products %}
         <div class="product-slider__item swiper-slide" data-target="img{{product.code}}">
           <div class="product-slider__card">
-            <img src="{% static 'Products/product_picture/background-color.jpg' %}" alt="" style="opacity: 0.85;" class="product-slider__cover" />
+            <img src="{% static 'Products/product_picture/background-color.jpg' %}" alt="" class="product-slider__cover" style="opacity: 0.85;" />
             <div class="product-slider__content">
               <h1 class="product-slider__title">
                 {{group.name}} <br>

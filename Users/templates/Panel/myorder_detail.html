@@ -25,10 +25,17 @@
                             <span class="title">تاریخ ثبت سفارش:</span>
                             <span class="value">14{{order.date|to_jalali:'%y/%m/%d'}}</span>
                         </div>
+                        {% if products %}
+                        <div class="col-md-6 col-sm-12">
+                            <span class="title">زمان شارژ:</span>
+                            <span class="value">5 دقیقه الی 15 دقیقه بعد از ثبت سفارش</span>
+                        </div>
+                        {% else %}
                         <div class="col-md-6 col-sm-12">
                             <span class="title">زمان تحویل:</span>
-                            <span class="value">تا 5 دقیقه الی 2 روز بعد از ثبت سفارش</span>
+                            <span class="value">24 الی 48 ساعت پس از پاسخگویی فروشنده</span>
                         </div>
+                        {% endif %}
                         <div class="col-12 text-center pb-0">
                             <span class="title">مبلغ کل سفارش:</span>
                             <span class="value">{{order.final_price}} تومان</span>
@@ -47,6 +54,7 @@
                     </div>
 
                     <!-- Start Profile-order-step-Slider -->
+                    {% if page == 'products' %}
                     <div class="col-12">
                         <div class="profile-order-steps carousel-lg owl-carousel owl-theme">
                                 {% if order.status != 'cl' %}
@@ -81,9 +89,55 @@
                                     <span>انجام شده</span>
                                 </div>
                                 {% else %}
+                                لغو شده
                                 {% endif %}
                         </div>
                     </div>
+                    {% else %}
+                    <div class="col-12">
+                        <div class="profile-order-steps carousel-lg owl-carousel owl-theme">
+                                {% if order.status != 'cl' %}
+                                <div {% if order.w4c %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/0eab59b0.svg' %}">
+                                    <span style="font-size: 10px">ثبت سفارش</span>
+                                </div>
+                                <div {% if order.w4a %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/0eab59b0.svg' %}">
+                                    <span style="font-size: 10px">در انتظار پاسخگویی فروشنده</span>
+                                </div>
+                                <div {% if order.w4r %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/d5d5e1d2.svg' %}">
+                                    <span style="font-size: 10px">در انتظار ارسال اطلاعات توسط فروشنده</span>
+                                </div>
+                                <div {% if order.rinfo %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/3db3cdeb.svg' %}">
+                                    <span style="font-size: 10px">ویرایش و آماده سازی اطلاعات توسط سایت</span>
+                                </div>
+                                <div {% if order.g2b %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/50450a73.svg' %}">
+                                    <span style="font-size: 10px">تحویل اطلاعات به خریدار</span>
+                                </div>
+                                <div {% if order.g2b %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/50450a73.svg' %}">
+                                    <span style="font-size: 10px">تایید اطلاعات توسط خریدار</span>
+                                </div>
+                                <div {% if order.dn %} class="item profile-order-steps-item is-active" {% else%}
+                                class="item profile-order-steps-item" {% endif %}>
+                                    <img src="{% static 'assets/img/svg/50450a73.svg' %}">
+                                    <span style="font-size: 10px">تکمیل سفارش</span>
+                                </div>
+                                {% else %}
+                                لغو شده
+                                {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
                     <!-- End Profile-order-step-Slider -->
 
                 </div>
